@@ -201,46 +201,7 @@ body {
     margin: 0;
 }
 
-/* MBTI选择 */
-.mbti-section {
-    margin-bottom: var(--space-xl);
-}
-
-.mbti-section details {
-    background: var(--wx-white);
-    border: 1px solid var(--wx-divider);
-    border-radius: var(--radius);
-    padding: var(--space-lg);
-}
-
-.mbti-section summary {
-    font-size: 14px;
-    color: var(--wx-text-secondary);
-    cursor: pointer;
-    list-style: none;
-    user-select: none;
-}
-
-.mbti-section summary::-webkit-details-marker {
-    display: none;
-}
-
-.mbti-selector {
-    margin-top: var(--space-md);
-}
-
-.mbti-selector select {
-    width: 100%;
-    padding: var(--space-md);
-    border: 1px solid var(--wx-divider);
-    border-radius: var(--radius-sm);
-    font-size: 14px;
-    font-family: var(--font-family);
-    background: var(--wx-white);
-    color: var(--wx-text-primary);
-}
-
-/* 微信绿按钮 */
+/* 微信绿按钮 - 性能优化版 */
 .primary-btn {
     width: 100%;
     padding: var(--space-lg);
@@ -252,10 +213,16 @@ body {
     font-weight: 500;
     font-family: var(--font-family);
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 2px 8px rgba(7, 193, 96, 0.2);
     position: relative;
     overflow: hidden;
+
+    /* 性能优化 */
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
 }
 
 .primary-btn::before {
@@ -263,28 +230,28 @@ body {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 0;
-    height: 0;
+    width: 300px;
+    height: 300px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.3);
-    transform: translate(-50%, -50%);
-    transition: width 0.6s, height 0.6s;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%) scale(0) translateZ(0);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
 }
 
 .primary-btn:hover {
-    background: linear-gradient(135deg, var(--wx-green-dark), var(--wx-green));
     box-shadow: 0 4px 16px rgba(7, 193, 96, 0.3);
-    transform: translateY(-2px);
+    transform: translateY(-2px) translateZ(0);
 }
 
 .primary-btn:hover::before {
-    width: 300px;
-    height: 300px;
+    transform: translate(-50%, -50%) scale(1) translateZ(0);
 }
 
 .primary-btn:active {
-    transform: translateY(0);
+    transform: translateY(0) translateZ(0);
     box-shadow: 0 2px 8px rgba(7, 193, 96, 0.2);
+    transition-duration: 0.1s;
 }
 
 .time-estimate {
@@ -379,15 +346,60 @@ body {
     color: var(--wx-text-secondary);
 }
 
-/* 书籍洞见导航 */
+/* 洞见模块容器 - 清晰分隔，全部可见 */
+.insight-section {
+    background: var(--wx-white);
+    border-radius: var(--radius-lg);
+    padding: var(--space-2xl);
+    margin-bottom: var(--space-2xl);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    border: 1px solid var(--wx-divider);
+    position: relative;
+    scroll-margin-top: 120px; /* 为固定导航栏留出空间 */
+}
+
+.insight-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--wx-green), var(--wx-green-dark));
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.insight-section h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--wx-text-primary);
+    margin-bottom: var(--space-md);
+    padding-bottom: var(--space-md);
+    border-bottom: 2px solid var(--wx-green-light);
+}
+
+.insight-section > p {
+    color: var(--wx-text-secondary);
+    margin-bottom: var(--space-xl);
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+/* 书籍洞见导航 - 固定在顶部 */
 .book-insights-nav {
     display: flex;
     gap: var(--space-sm);
     margin-bottom: var(--space-xl);
     padding: var(--space-sm);
-    background: var(--wx-white);
+    background: rgba(255, 255, 255, 0.95);
     border-radius: var(--radius);
     overflow-x: auto;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .insight-nav-btn {
@@ -963,65 +975,366 @@ body {
     cursor: not-allowed;
 }
 
-/* 快速练习 */
+/* 快速练习 - 优化版 */
 .quick-practice-section {
-    background: var(--wx-white);
-    border: 1px solid var(--wx-divider);
-    border-radius: var(--radius);
-    padding: var(--space-xl);
+    background: linear-gradient(135deg, var(--wx-white) 0%, #fafbfc 100%);
+    border: 2px solid var(--wx-green-light);
+    border-radius: var(--radius-lg);
+    padding: var(--space-2xl);
     margin-top: var(--space-2xl);
+    box-shadow: 0 4px 16px rgba(7, 193, 96, 0.08);
+    position: relative;
+    overflow: hidden;
+}
+
+.quick-practice-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--wx-green), var(--wx-green-dark));
 }
 
 .quick-practice-section h3 {
-    font-size: 16px;
-    font-weight: 500;
+    font-size: 18px;
+    font-weight: 600;
     color: var(--wx-text-primary);
     margin-bottom: var(--space-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
 }
 
 .quick-practice-section > p {
     font-size: 14px;
     color: var(--wx-text-secondary);
-    margin-bottom: var(--space-lg);
+    margin-bottom: var(--space-xl);
+    line-height: 1.6;
 }
 
 .quick-practices {
-    display: flex;
-    gap: var(--space-md);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-lg);
 }
 
 .quick-practice-btn {
-    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--space-sm);
-    padding: var(--space-lg);
-    background: var(--wx-gray-1);
-    border: 1px solid var(--wx-divider);
-    border-radius: var(--radius);
+    gap: var(--space-md);
+    padding: var(--space-2xl) var(--space-xl);
+    background: var(--wx-white);
+    border: 2px solid var(--wx-divider);
+    border-radius: var(--radius-lg);
     cursor: pointer;
-    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+
+    /* 性能优化 */
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+.quick-practice-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, var(--wx-green-light), transparent);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
 }
 
 .quick-practice-btn:hover {
-    background: var(--wx-green-light);
+    transform: translateY(-4px) translateZ(0);
+    box-shadow: 0 8px 24px rgba(7, 193, 96, 0.15);
     border-color: var(--wx-green);
 }
 
+.quick-practice-btn:hover::before {
+    opacity: 1;
+}
+
+.quick-practice-btn:active {
+    transform: translateY(-2px) translateZ(0);
+    box-shadow: 0 4px 12px rgba(7, 193, 96, 0.12);
+    transition-duration: 0.1s;
+}
+
 .practice-icon {
-    font-size: 24px;
+    font-size: 48px;
+    line-height: 1;
+    transform: translateZ(0);
+    transition: transform 0.2s ease;
+}
+
+.quick-practice-btn:hover .practice-icon {
+    transform: scale(1.1) translateZ(0);
 }
 
 .practice-name {
-    font-size: 14px;
-    font-weight: 500;
+    font-size: 16px;
+    font-weight: 600;
     color: var(--wx-text-primary);
+    letter-spacing: 0.3px;
 }
 
 .practice-time {
-    font-size: 12px;
-    color: var(--wx-text-tertiary);
+    font-size: 13px;
+    color: var(--wx-green);
+    font-weight: 500;
+    background: var(--wx-green-light);
+    padding: 4px 12px;
+    border-radius: 12px;
+}
+
+/* 概念详情页 - 优化排版 */
+.concept-detail {
+    max-width: 680px;
+    margin: 0 auto;
+}
+
+.concept-detail h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--wx-text-primary);
+    margin-bottom: var(--space-md);
+    line-height: 1.3;
+}
+
+.concept-detail .en-name {
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--wx-text-secondary);
+    margin-left: var(--space-sm);
+}
+
+/* 体验引导部分 */
+.experience-section {
+    background: linear-gradient(135deg, #fff8e1 0%, #fff3cd 100%);
+    border: 2px solid #ffd54f;
+    border-radius: var(--radius-lg);
+    padding: var(--space-2xl);
+    margin-bottom: var(--space-2xl);
+    position: relative;
+}
+
+.experience-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #ffd54f, #ffb300);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.experience-section h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #f57c00;
+    margin-bottom: var(--space-lg);
+}
+
+.experience-text {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--wx-text-primary);
+    margin-bottom: var(--space-xl);
+}
+
+.experience-text br {
+    display: block;
+    margin-bottom: var(--space-sm);
+}
+
+/* 关键对比部分 */
+.contrast-section {
+    background: var(--wx-white);
+    border: 1px solid var(--wx-divider);
+    border-radius: var(--radius-lg);
+    padding: var(--space-2xl);
+    margin-bottom: var(--space-2xl);
+}
+
+.contrast-section h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--wx-text-primary);
+    margin-bottom: var(--space-xl);
+}
+
+.contrast-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-xl);
+}
+
+.contrast-wrong,
+.contrast-right {
+    background: var(--wx-white);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+}
+
+.contrast-wrong {
+    border: 2px solid #ffcdd2;
+    background: linear-gradient(135deg, #fff 0%, #ffebee 100%);
+}
+
+.contrast-right {
+    border: 2px solid #c8e6c9;
+    background: linear-gradient(135deg, #fff 0%, #f1f8f4 100%);
+}
+
+.contrast-wrong h4,
+.contrast-right h4 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: var(--space-md);
+}
+
+.contrast-wrong h4 {
+    color: #d32f2f;
+}
+
+.contrast-right h4 {
+    color: #388e3c;
+}
+
+.contrast-wrong p strong,
+.contrast-right p strong {
+    font-size: 15px;
+    font-weight: 600;
+    display: block;
+    margin-bottom: var(--space-sm);
+    line-height: 1.6;
+}
+
+.contrast-grid .example {
+    font-size: 14px;
+    color: var(--wx-text-secondary);
+    line-height: 1.7;
+    margin-top: var(--space-md);
+    padding-left: var(--space-md);
+    border-left: 3px solid currentColor;
+}
+
+.contrast-section .insight {
+    background: linear-gradient(135deg, #e3f5ff 0%, #f0f9ff 100%);
+    border: 2px solid #90caf9;
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--wx-text-primary);
+}
+
+/* 常见误解部分 */
+.misconceptions-section {
+    background: var(--wx-white);
+    border: 1px solid var(--wx-divider);
+    border-radius: var(--radius-lg);
+    padding: var(--space-2xl);
+    margin-bottom: var(--space-2xl);
+}
+
+.misconceptions-section h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--wx-text-primary);
+    margin-bottom: var(--space-xl);
+}
+
+.misconception-item {
+    background: var(--wx-gray-1);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    margin-bottom: var(--space-lg);
+}
+
+.misconception-item:last-child {
+    margin-bottom: 0;
+}
+
+.misconception-item .myth {
+    font-size: 15px;
+    font-weight: 500;
+    color: #d32f2f;
+    margin-bottom: var(--space-md);
+    line-height: 1.7;
+}
+
+.misconception-item .truth {
+    font-size: 15px;
+    font-weight: 500;
+    color: #388e3c;
+    line-height: 1.7;
+}
+
+/* 个性化解释部分 */
+.personalized-section {
+    background: linear-gradient(135deg, #f3e5f5 0%, #fce4ec 100%);
+    border: 2px solid #ce93d8;
+    border-radius: var(--radius-lg);
+    padding: var(--space-2xl);
+    margin-bottom: var(--space-2xl);
+}
+
+.personalized-section h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #7b1fa2;
+    margin-bottom: var(--space-lg);
+}
+
+.personalized-content {
+    font-size: 15px;
+    line-height: 1.9;
+    color: var(--wx-text-primary);
+}
+
+.personalized-content br {
+    display: block;
+    margin-bottom: var(--space-md);
+}
+
+/* 响应式优化 */
+@media (max-width: 640px) {
+    .concept-detail h2 {
+        font-size: 24px;
+    }
+
+    .concept-detail .en-name {
+        display: block;
+        margin-left: 0;
+        margin-top: var(--space-xs);
+        font-size: 18px;
+    }
+
+    .contrast-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .experience-section,
+    .contrast-section,
+    .misconceptions-section,
+    .personalized-section {
+        padding: var(--space-lg);
+    }
 }
 
 /* 工具箱 */
@@ -1171,7 +1484,8 @@ body {
     }
     
     .quick-practices {
-        flex-direction: column;
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
     }
     
     .argument-path {
@@ -1299,6 +1613,15 @@ body {
         flex-direction: column;
         align-items: flex-start;
         gap: var(--space-sm);
+    }
+
+    .insight-section {
+        padding: var(--space-lg);
+        margin-bottom: var(--space-lg);
+    }
+
+    .insight-section h2 {
+        font-size: 20px;
     }
 }
 
@@ -1441,12 +1764,21 @@ body {
     justify-content: center;
 }
 
-/* 游戏屏幕增强 */
+/* 游戏屏幕增强 - 性能优化 */
 .game-screen,
 .practice-screen {
     padding: var(--space-xl);
     max-width: 600px;
     margin: 0 auto;
+    will-change: contents;
+    transform: translateZ(0);
+}
+
+/* 练习引导区域性能优化 */
+.practice-guide,
+.game-area {
+    will-change: contents;
+    transform: translateZ(0);
 }
 
 .game-intro,
@@ -1559,10 +1891,6 @@ body {
     }
 }
 
-.insight-section.active {
-    animation: fadeIn 0.4s ease;
-}
-
 .chapter-card {
     animation: fadeIn 0.4s ease;
     animation-fill-mode: both;
@@ -1574,7 +1902,7 @@ body {
 .chapter-card:nth-child(4) { animation-delay: 0.2s; }
 .chapter-card:nth-child(5) { animation-delay: 0.25s; }
 
-/* 呼吸圆圈动画 */
+/* 呼吸圆圈动画 - 性能优化 */
 .breathing-circle {
     width: 120px;
     height: 120px;
@@ -1582,6 +1910,9 @@ body {
     border-radius: 50%;
     animation: breathe 4s ease-in-out infinite;
     box-shadow: 0 4px 20px rgba(7, 193, 96, 0.3);
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
 }
 
 .breathing-circle-container {
@@ -1591,7 +1922,7 @@ body {
     padding: var(--space-2xl);
 }
 
-/* 思维气泡动画 */
+/* 思维气泡动画 - 性能优化 */
 .thought-bubble {
     position: absolute;
     padding: var(--space-md) var(--space-lg);
@@ -1601,9 +1932,12 @@ body {
     font-size: 14px;
     color: var(--wx-text-primary);
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     animation: float 3s ease-in-out infinite;
     box-shadow: var(--shadow);
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
 }
 
 .thought-bubble:hover {
@@ -1654,7 +1988,7 @@ body {
     animation: fadeIn 0.5s ease;
 }
 
-/* 进度条增强 */
+/* 进度条增强 - 性能优化 */
 .progress-bar {
     width: 100%;
     height: 8px;
@@ -1670,9 +2004,11 @@ body {
     border-radius: 4px;
     transition: width 0.5s ease;
     box-shadow: 0 0 10px rgba(7, 193, 96, 0.3);
+    will-change: width;
+    transform: translateZ(0);
 }
 
-/* 计时器圆圈 */
+/* 计时器圆圈 - 性能优化 */
 .timer-circle {
     width: 100px;
     height: 100px;
@@ -1687,6 +2023,9 @@ body {
     color: var(--wx-green);
     margin: var(--space-xl) auto;
     animation: pulse 2s ease-in-out infinite;
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
 }
 
 /* 卡片悬停效果增强 */
@@ -1818,41 +2157,6 @@ body {
                     </div>
                 </div>
 
-                <div class="mbti-section">
-                    <details>
-                        <summary>🎯 选择你的学习风格（可选）</summary>
-                        <div class="mbti-selector">
-                            <select id="mbtiSelect">
-                                <option value="">通用版本</option>
-                                <optgroup label="分析师 (NT)">
-                                    <option value="INTJ">INTJ</option>
-                                    <option value="INTP">INTP</option>
-                                    <option value="ENTJ">ENTJ</option>
-                                    <option value="ENTP">ENTP</option>
-                                </optgroup>
-                                <optgroup label="外交官 (NF)">
-                                    <option value="INFJ">INFJ</option>
-                                    <option value="INFP">INFP</option>
-                                    <option value="ENFJ">ENFJ</option>
-                                    <option value="ENFP">ENFP</option>
-                                </optgroup>
-                                <optgroup label="守护者 (SJ)">
-                                    <option value="ISTJ">ISTJ</option>
-                                    <option value="ISFJ">ISFJ</option>
-                                    <option value="ESTJ">ESTJ</option>
-                                    <option value="ESFJ">ESFJ</option>
-                                </optgroup>
-                                <optgroup label="探险家 (SP)">
-                                    <option value="ISTP">ISTP</option>
-                                    <option value="ISFP">ISFP</option>
-                                    <option value="ESTP">ESTP</option>
-                                    <option value="ESFP">ESFP</option>
-                                </optgroup>
-                            </select>
-                        </div>
-                    </details>
-                </div>
-
                 <button class="primary-btn large" id="startBtn">
                     开始深度理解这本书 →
                 </button>
@@ -1871,7 +2175,7 @@ body {
             <div class="nav-links">
                 <button class="nav-link active" data-view="book">理解全书</button>
                 <button class="nav-link" data-view="learn">学习概念</button>
-                <button class="nav-link" data-view="tools">工具箱</button>
+                <button class="nav-link" data-view="tools">互动游戏</button>
             </div>
         </nav>
 
@@ -1885,58 +2189,46 @@ body {
 
                 <!-- 书籍洞见导航 -->
                 <div class="book-insights-nav">
-                    <button class="insight-nav-btn active" data-section="chapters">章节命题</button>
-                    <button class="insight-nav-btn" data-section="ultimate">终极命题</button>
+                    <button class="insight-nav-btn active" data-section="ultimate">一句话总结</button>
                     <button class="insight-nav-btn" data-section="map">论证地图</button>
                     <button class="insight-nav-btn" data-section="key20">关键洞见</button>
+                    <button class="insight-nav-btn" data-section="chapters">每章观点</button>
                 </div>
 
-                <!-- 章节核心命题 -->
-                <div id="chaptersSection" class="insight-section active">
-                    <h2 style="font-family: var(--font-serif); color: var(--color-bamboo); margin-bottom: var(--spacing-lg);">
-                        10章核心命题
-                    </h2>
-                    <p style="color: var(--color-earth); margin-bottom: var(--spacing-xl);">
-                        每个章节背后的核心命题，快速理解每章回答了什么问题，颠覆了何种观点
-                    </p>
-                    <div id="chaptersGrid" class="chapter-grid"></div>
-                </div>
-
-                <!-- 终极核心命题 -->
-                <div id="ultimateSection" class="insight-section">
+                <!-- 一句话总结 -->
+                <div id="ultimateSection" class="insight-section active">
+                    <h2>一句话总结</h2>
+                    <p>一个能提领全书的意义黑洞，可以无限扩展的智慧源头</p>
                     <div class="ultimate-proposition">
-                        <h2>终极核心命题</h2>
-                        <p style="color: var(--color-earth); margin-bottom: var(--spacing-lg);">
-                            一个能提领全书的意义黑洞，可以无限扩展的智慧源头
-                        </p>
                         <div id="ultimateContent"></div>
                     </div>
                 </div>
 
                 <!-- 论证地图 -->
                 <div id="mapSection" class="insight-section">
-                    <div class="learning-header">
-                        <h2>论证地图</h2>
-                        <p class="learning-subtitle">从起点到终点，6个地标构成清晰的理解路径</p>
-                    </div>
+                    <h2>论证地图</h2>
+                    <p>从起点到终点，6个地标构成清晰的理解路径</p>
 
                     <div class="map-start-point">
                         <h3>起点</h3>
                         <p id="startPoint"></p>
                     </div>
-                    
+
                     <div id="landmarksPath" class="argument-path"></div>
                 </div>
 
-                <!-- Key20 洞见 -->
+                <!-- 关键洞见 -->
                 <div id="key20Section" class="insight-section">
-                    <h2 style="font-family: var(--font-serif); color: var(--color-bamboo); margin-bottom: var(--spacing-md);">
-                        Key20：20个反常识洞见
-                    </h2>
-                    <p style="color: var(--color-earth); margin-bottom: var(--spacing-xl);">
-                        精选最颠覆性的命题，中英对照 + 深度解析
-                    </p>
+                    <h2>关键洞见：20个反常识观点</h2>
+                    <p>精选最颠覆性的命题，中英对照 + 深度解析</p>
                     <div id="key20Grid" class="insights-grid"></div>
+                </div>
+
+                <!-- 每章观点 -->
+                <div id="chaptersSection" class="insight-section">
+                    <h2>每章观点</h2>
+                    <p>每个章节背后的核心命题，快速理解每章回答了什么问题，颠覆了何种观点</p>
+                    <div id="chaptersGrid" class="chapter-grid"></div>
                 </div>
             </div>
 
@@ -2033,22 +2325,6 @@ body {
                         </div>
                     </div>
 
-                    <div class="quick-practice-section">
-                        <h3>📌 随时可用的快速练习</h3>
-                        <p>当你感到焦虑、思维过载时：</p>
-                        <div class="quick-practices">
-                            <button class="quick-practice-btn" data-practice="three_breaths">
-                                <span class="practice-icon">🌬️</span>
-                                <span class="practice-name">3次呼吸</span>
-                                <span class="practice-time">30秒</span>
-                            </button>
-                            <button class="quick-practice-btn" data-practice="body_scan">
-                                <span class="practice-icon">🧘</span>
-                                <span class="practice-name">身体扫描</span>
-                                <span class="practice-time">60秒</span>
-                            </button>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -2065,11 +2341,6 @@ body {
                             <div class="games-grid" id="gamesList"></div>
                         </div>
                         
-                        <div class="tool-section">
-                            <h3>🧘 日常练习</h3>
-                            <p>从理解到活出来</p>
-                            <div class="practices-grid" id="practicesList"></div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -2773,37 +3044,17 @@ class UserProfile {
     }
     
     // 生成新画像
-    static generate(mbti) {
+    static generate() {
         const profile = {
-            mbti: mbti || 'adaptive',
-            style: this.deriveStyle(mbti),
+            style: 'balanced',
             created_at: new Date().toISOString(),
             preferences: {
                 practiceLength: null,
                 practiceTime: null
             }
         };
-        
+
         return profile;
-    }
-    
-    // 从MBTI推导风格
-    static deriveStyle(mbti) {
-        if (!mbti || mbti === 'adaptive') return 'balanced';
-        
-        const firstLetter = mbti[0];
-        const secondLetter = mbti[1];
-        
-        // NT - 理性型
-        if (secondLetter === 'N' && mbti.includes('T')) return 'NT';
-        // NF - 情感型
-        if (secondLetter === 'N' && mbti.includes('F')) return 'NF';
-        // ST - 实用型
-        if (secondLetter === 'S' && mbti.includes('T')) return 'ST';
-        // SP - 体验型
-        if (secondLetter === 'S' && mbti.includes('F')) return 'SP';
-        
-        return 'balanced';
     }
     
     // 加载画像
@@ -3090,18 +3341,6 @@ class ConceptExplainer {
                 <div class="personalized-section">
                     <h3>📚 个性化解释</h3>
                     <div class="personalized-content">${this.formatText(personalizedContent)}</div>
-                </div>
-                
-                <div class="actions-section">
-                    <h3>🎯 下一步</h3>
-                    <div class="action-buttons">
-                        <button class="card-btn" data-action="practice" data-practice="three_breaths">
-                            做个练习
-                        </button>
-                        <button class="card-btn" data-action="game" data-game="thinking_observer">
-                            玩个游戏
-                        </button>
-                    </div>
                 </div>
             </div>
         `;
@@ -3855,12 +4094,9 @@ class PowerOfNowApp {
     }
     
     handleStart() {
-        const mbtiSelect = document.getElementById('mbtiSelect');
-        const mbti = mbtiSelect ? mbtiSelect.value : '';
-        
-        const profile = UserProfile.generate(mbti);
+        const profile = UserProfile.generate();
         this.userProfile.save(profile);
-        
+
         this.showHome();
     }
     
@@ -3983,22 +4219,23 @@ class PowerOfNowApp {
         this.practiceManager.startPractice(practiceId);
     }
     
-    // 书籍洞见相关方法
+    // 书籍洞见相关方法 - 使用平滑滚动
     switchInsightSection(sectionName) {
+        // 更新按钮激活状态
         document.querySelectorAll('.insight-nav-btn').forEach(btn => {
             btn.classList.remove('active');
             if (btn.dataset.section === sectionName) {
                 btn.classList.add('active');
             }
         });
-        
-        document.querySelectorAll('.insight-section').forEach(section => {
-            section.classList.remove('active');
-        });
-        
+
+        // 平滑滚动到目标区域
         const targetSection = document.getElementById(sectionName + 'Section');
         if (targetSection) {
-            targetSection.classList.add('active');
+            targetSection.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
         }
     }
     
@@ -4007,6 +4244,39 @@ class PowerOfNowApp {
         this.renderUltimateProposition();
         this.renderArgumentMap();
         this.renderKey20();
+
+        // 设置滚动监听，自动更新导航状态
+        this.setupScrollSpy();
+    }
+
+    setupScrollSpy() {
+        const sections = document.querySelectorAll('.insight-section');
+        const navButtons = document.querySelectorAll('.insight-nav-btn');
+
+        const observerOptions = {
+            root: null,
+            rootMargin: '-20% 0px -70% 0px',
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const sectionId = entry.target.id;
+                    const sectionName = sectionId.replace('Section', '');
+
+                    // 更新导航按钮状态
+                    navButtons.forEach(btn => {
+                        btn.classList.remove('active');
+                        if (btn.dataset.section === sectionName) {
+                            btn.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => observer.observe(section));
     }
     
     renderChapters() {
