@@ -1800,32 +1800,63 @@ body {
     margin-top: var(--space-sm);
 }
 
-/* 等级选择器 */
-.level-selector {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-    margin-top: var(--space-xl);
-}
-
-.level-btn {
-    padding: var(--space-lg);
-    background: var(--wx-white);
+/* 游戏介绍卡片 - 优化版 */
+.game-intro-card {
+    background: linear-gradient(135deg, #f5f7fa 0%, #ffffff 100%);
     border: 2px solid var(--wx-divider);
-    border-radius: var(--radius);
-    font-size: 15px;
-    font-weight: 500;
-    color: var(--wx-text-primary);
-    cursor: pointer;
-    font-family: var(--font-family);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: var(--radius-lg);
+    padding: var(--space-2xl);
+    margin-top: var(--space-xl);
+    margin-bottom: var(--space-2xl);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
 }
 
-.level-btn:hover {
-    border-color: var(--wx-green);
-    background: var(--wx-green-light);
-    transform: translateX(8px);
-    box-shadow: 0 4px 12px rgba(7, 193, 96, 0.15);
+.game-intro-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--wx-green);
+    margin-bottom: var(--space-lg);
+    text-align: center;
+}
+
+.game-intro-text {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--wx-text-secondary);
+    margin-bottom: var(--space-md);
+    text-align: center;
+}
+
+.game-intro-text:last-of-type {
+    margin-bottom: var(--space-xl);
+}
+
+.game-duration-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    background: linear-gradient(135deg, var(--wx-green-light), #e8f5e9);
+    border: 2px solid var(--wx-green);
+    border-radius: 24px;
+    padding: var(--space-md) var(--space-xl);
+    margin: 0 auto;
+    width: fit-content;
+    display: flex;
+    justify-content: center;
+}
+
+.duration-icon {
+    font-size: 20px;
+}
+
+.duration-text {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--wx-green-dark);
+}
+
+.start-game-btn {
+    margin-top: var(--space-xl);
 }
 
 /* 增强的动画效果 */
@@ -2980,12 +3011,7 @@ const GAMES_DATA = {
         concept: 'now',
         duration: 60,
         description: '练习回到当下的能力',
-        
-        levels: [
-            { name: '初识当下', duration: 10 },
-            { name: '保持临在', duration: 30 },
-            { name: '深度临在', duration: 60 }
-        ]
+        level: { name: '深度临在', duration: 60 }
     }
 };
 
@@ -3681,39 +3707,39 @@ class GameEngine {
         document.body.classList.remove('ego-mode', 'presence-mode');
     }
     
-    // 当下之锚游戏
+    // 当下之锚游戏 - 优化版
     startPresentMoment(container, game) {
         container.innerHTML = `
             <div class="game-screen">
                 <h2>${game.name}</h2>
-                <p class="game-intro">
-                    中央的圆圈代表"当下"。<br>
-                    周围的干扰代表"思维的拉扯"。<br><br>
-                    持续关注中央的圆圈<br>
-                    当注意力被拉走时，轻触屏幕回来
-                </p>
-                
-                <div class="level-selector">
-                    ${game.levels.map((level, i) => `
-                        <button class="level-btn" data-level="${i}">
-                            ${level.name} (${level.duration}秒)
-                        </button>
-                    `).join('')}
+                <div class="game-intro-card">
+                    <p class="game-intro-title">游戏规则</p>
+                    <p class="game-intro-text">
+                        中央的圆圈代表"当下"<br>
+                        周围的干扰代表"思维的拉扯"
+                    </p>
+                    <p class="game-intro-text">
+                        持续关注中央的圆圈<br>
+                        当注意力被拉走时，轻触屏幕回来
+                    </p>
+                    <div class="game-duration-badge">
+                        <span class="duration-icon">⏱️</span>
+                        <span class="duration-text">${game.level.duration}秒 深度练习</span>
+                    </div>
                 </div>
+
+                <button class="primary-btn start-game-btn">开始练习</button>
             </div>
         `;
-        
-        document.querySelectorAll('.level-btn').forEach(btn => {
-            btn.onclick = () => {
-                const levelIndex = parseInt(btn.dataset.level);
-                this.runPresentMomentGame(game, levelIndex);
-            };
-        });
+
+        container.querySelector('.start-game-btn').onclick = () => {
+            this.runPresentMomentGame(game);
+        };
     }
     
     // 运行当下之锚游戏
-    runPresentMomentGame(game, levelIndex) {
-        const level = game.levels[levelIndex];
+    runPresentMomentGame(game) {
+        const level = game.level;
         const container = document.getElementById('gameContent');
         
         container.innerHTML = `
