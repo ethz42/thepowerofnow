@@ -1,0 +1,4148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>当下的力量 - 深度理解指南</title>
+    <style>
+/* 微信风格 - 当下的力量 */
+
+:root {
+    /* 微信色彩系统 */
+    --wx-green: #07C160;
+    --wx-green-dark: #06AD56;
+    --wx-green-light: rgba(7, 193, 96, 0.1);
+    --wx-bg: #EDEDED;
+    --wx-white: #FFFFFF;
+    --wx-gray-1: #F7F7F7;
+    --wx-gray-2: #E5E5E5;
+    --wx-gray-3: #B2B2B2;
+    --wx-gray-4: #999999;
+    --wx-text-primary: #191919;
+    --wx-text-secondary: #666666;
+    --wx-text-tertiary: #B2B2B2;
+    --wx-divider: #E7E7E7;
+    
+    /* 间距系统 */
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 12px;
+    --space-lg: 16px;
+    --space-xl: 24px;
+    --space-2xl: 32px;
+    
+    /* 字体 */
+    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    
+    /* 圆角 */
+    --radius: 8px;
+    --radius-sm: 4px;
+    --radius-lg: 12px;
+    
+    /* 阴影 */
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    background: var(--wx-bg);
+    color: var(--wx-text-primary);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* 屏幕容器 */
+.screen {
+    display: none;
+    min-height: 100vh;
+}
+
+.screen.active {
+    display: block;
+}
+
+/* 欢迎屏幕 */
+.welcome-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f5f7fa 0%, #ffffff 50%, #f0f9f6 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-xl);
+    position: relative;
+    overflow: hidden;
+}
+
+.welcome-container::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(7, 193, 96, 0.05) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: float 6s ease-in-out infinite;
+}
+
+.welcome-container::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -10%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(7, 193, 96, 0.03) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: float 8s ease-in-out infinite reverse;
+}
+
+.value-proposition {
+    max-width: 600px;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+    animation: fadeIn 0.6s ease;
+}
+
+.book-title {
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--wx-text-primary);
+    text-align: center;
+    margin-bottom: var(--space-sm);
+}
+
+.book-subtitle {
+    font-size: 14px;
+    color: var(--wx-text-tertiary);
+    text-align: center;
+    margin-bottom: var(--space-2xl);
+}
+
+/* 简洁的信息卡片 */
+.book-intro,
+.user-problem,
+.solution {
+    background: var(--wx-white);
+    border: 1px solid var(--wx-divider);
+    border-radius: var(--radius);
+    padding: var(--space-lg);
+    margin-bottom: var(--space-lg);
+}
+
+.book-intro .highlight {
+    font-size: 15px;
+    color: var(--wx-green);
+    margin-bottom: var(--space-md);
+    font-weight: 500;
+}
+
+.book-intro .description {
+    font-size: 14px;
+    color: var(--wx-text-secondary);
+    line-height: 1.8;
+}
+
+.user-problem h3,
+.solution h3 {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--wx-text-primary);
+    margin-bottom: var(--space-md);
+}
+
+.problems-list,
+.benefits-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.problem-item,
+.benefit-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    padding: var(--space-md);
+    background: var(--wx-gray-1);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    color: var(--wx-text-secondary);
+}
+
+.benefit-item {
+    background: var(--wx-green-light);
+}
+
+.benefit-item .icon {
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.benefit-text strong {
+    display: block;
+    color: var(--wx-text-primary);
+    margin-bottom: var(--space-xs);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.benefit-text p {
+    font-size: 13px;
+    color: var(--wx-text-secondary);
+    margin: 0;
+}
+
+/* MBTI选择 */
+.mbti-section {
+    margin-bottom: var(--space-xl);
+}
+
+.mbti-section details {
+    background: var(--wx-white);
+    border: 1px solid var(--wx-divider);
+    border-radius: var(--radius);
+    padding: var(--space-lg);
+}
+
+.mbti-section summary {
+    font-size: 14px;
+    color: var(--wx-text-secondary);
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+}
+
+.mbti-section summary::-webkit-details-marker {
+    display: none;
+}
+
+.mbti-selector {
+    margin-top: var(--space-md);
+}
+
+.mbti-selector select {
+    width: 100%;
+    padding: var(--space-md);
+    border: 1px solid var(--wx-divider);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-family: var(--font-family);
+    background: var(--wx-white);
+    color: var(--wx-text-primary);
+}
+
+/* 微信绿按钮 */
+.primary-btn {
+    width: 100%;
+    padding: var(--space-lg);
+    background: linear-gradient(135deg, var(--wx-green), var(--wx-green-dark));
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    font-size: 16px;
+    font-weight: 500;
+    font-family: var(--font-family);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(7, 193, 96, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.primary-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.primary-btn:hover {
+    background: linear-gradient(135deg, var(--wx-green-dark), var(--wx-green));
+    box-shadow: 0 4px 16px rgba(7, 193, 96, 0.3);
+    transform: translateY(-2px);
+}
+
+.primary-btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.primary-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(7, 193, 96, 0.2);
+}
+
+.time-estimate {
+    text-align: center;
+    font-size: 13px;
+    color: var(--wx-text-tertiary);
+    margin-top: var(--space-md);
+}
+
+/* 主导航 */
+.main-nav {
+    background: var(--wx-white);
+    border-bottom: 1px solid var(--wx-divider);
+    padding: 0 var(--space-lg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 56px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.nav-brand {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--wx-text-primary);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.nav-links {
+    display: flex;
+    gap: var(--space-md);
+}
+
+.nav-link {
+    padding: var(--space-sm) var(--space-md);
+    background: none;
+    border: none;
+    font-size: 14px;
+    color: var(--wx-text-secondary);
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-family);
+    transition: all 0.2s;
+}
+
+.nav-link.active {
+    color: var(--wx-green);
+    background: var(--wx-green-light);
+}
+
+.nav-link:hover:not(.active) {
+    background: var(--wx-gray-1);
+}
+
+/* 主内容区 */
+.main-content {
+    padding: var(--space-lg);
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.view {
+    display: none;
+}
+
+.view.active {
+    display: block;
+}
+
+/* 页面标题 */
+.learning-header {
+    margin-bottom: var(--space-2xl);
+    text-align: center;
+}
+
+.learning-header h1 {
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--wx-text-primary);
+    margin-bottom: var(--space-sm);
+}
+
+.learning-subtitle {
+    font-size: 14px;
+    color: var(--wx-text-secondary);
+}
+
+/* 书籍洞见导航 */
+.book-insights-nav {
+    display: flex;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-xl);
+    padding: var(--space-sm);
+    background: var(--wx-white);
+    border-radius: var(--radius);
+    overflow-x: auto;
+}
+
+.insight-nav-btn {
+    padding: var(--space-sm) var(--space-lg);
+    background: var(--wx-white);
+    border: 1px solid var(--wx-divider);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    color: var(--wx-text-secondary);
+    cursor: pointer;
+    font-family: var(--font-family);
+    white-space: nowrap;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-weight: 500;
+    position: relative;
+}
+
+.insight-nav-btn.active {
+    background: linear-gradient(135deg, var(--wx-green), var(--wx-green-dark));
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 2px 8px rgba(7, 193, 96, 0.3);
+    transform: translateY(-2px);
+}
+
+.insight-nav-btn:hover:not(.active) {
+    background: var(--wx-gray-1);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* 章节卡片 */
+.chapter-grid,
+.insights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--space-lg);
+}
+
+.chapter-card,
+.insight-card {
+    background: var(--wx-white);
+    border: 1px solid var(--wx-divider);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.chapter-card::after,
+.insight-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--wx-green), var(--wx-green-dark));
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.chapter-card:hover,
+.insight-card:hover {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    transform: translateY(-4px);
+    border-color: var(--wx-green-light);
+}
+
+.chapter-card:hover::after,
+.insight-card:hover::after {
+    transform: scaleX(1);
+}
+
+.chapter-number {
+    font-size: 12px;
+    color: var(--wx-green);
+    margin-bottom: var(--space-sm);
+    font-weight: 500;
+}
+
+.chapter-card h3 {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--wx-text-primary);
+    margin-bottom: var(--space-md);
+}
+
+.chapter-proposition {
+    font-size: 14px;
+    color: var(--wx-text-primary);
+    line-height: 1.6;
+    margin-bottom: var(--space-md);
+}
+
+.chapter-meta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--wx-divider);
+}
+
+.chapter-meta-item {
+    font-size: 13px;
+    color: var(--wx-text-secondary);
+    line-height: 1.6;
+}
+
+.chapter-meta-item strong {
+    color: var(--wx-text-primary);
+}
+
+/* 终极命题 */
+.ultimate-proposition {
+    background: var(--wx-white);
+    border: 1px solid var(--wx-divider);
+    border-radius: var(--radius);
+    padding: var(--space-2xl);
+    text-align: center;
+}
+
+.ultimate-proposition h2 {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--wx-text-primary);
+    margin-bottom: var(--space-md);
+}
+
+.ultimate-statement {
+    font-size: 18px;
+    color: var(--wx-text-primary);
+    line-height: 1.8;
+    margin: var(--space-xl) 0;
+    padding: var(--space-xl);
+    background: var(--wx-green-light);
+    border-radius: var(--radius);
+}
+
+.expansion-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    text-align: left;
+    max-width: 600px;
+    margin: var(--space-xl) auto 0;
+}
+
+.expansion-item {
+    padding: var(--space-md);
+    background: var(--wx-gray-1);
+    border-radius: var(--radius-sm);
+    border-left: 3px solid var(--wx-green);
+    font-size: 14px;
+    color: var(--wx-text-secondary);
+}
+
+/* 论证地图 */
+.map-start-point {
+    background: linear-gradient(135deg, var(--wx-white), var(--wx-gray-1));
+    padding: var(--space-2xl);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--space-2xl);
+    border: 2px solid var(--wx-green);
+    box-shadow: 0 4px 16px rgba(7, 193, 96, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.map-start-point::before {
+    content: '🎯';
+    position: absolute;
+    top: var(--space-lg);
+    right: var(--space-lg);
+    font-size: 48px;
+    opacity: 0.1;
+}
+
+.map-start-point h3 {
+    color: var(--wx-green);
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: var(--space-md);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.map-start-point h3::before {
+    content: '🚀';
+    font-size: 20px;
+}
+
+.map-start-point p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--wx-text-primary);
+    position: relative;
+    z-index: 1;
+    font-weight: 500;
+}
+
+.argument-path {
+    position: relative;
+    padding-left: 40px;
+    padding-top: var(--space-md);
+}
+
+.argument-path::before {
+    content: '';
+    position: absolute;
+    left: 16px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, var(--wx-green-light), var(--wx-divider));
+    border-radius: 2px;
+}
+
+.landmark-card {
+    position: relative;
+    background: var(--wx-white);
+    border: 1px solid var(--wx-divider);
+    border-radius: var(--radius-lg);
+    padding: var(--space-2xl);
+    margin-bottom: var(--space-2xl);
+    box-shadow: var(--shadow);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.landmark-card:hover {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    transform: translateX(4px);
+    border-color: var(--wx-green-light);
+}
+
+.landmark-card::before {
+    content: '';
+    position: absolute;
+    left: -27px;
+    top: 32px;
+    width: 14px;
+    height: 14px;
+    background: linear-gradient(135deg, var(--wx-green), var(--wx-green-dark));
+    border: 3px solid var(--wx-white);
+    border-radius: 50%;
+    box-shadow: 0 0 0 2px var(--wx-green-light);
+    z-index: 2;
+}
+
+.landmark-title {
+    font-size: 19px;
+    font-weight: 600;
+    color: var(--wx-text-primary);
+    margin-bottom: var(--space-lg);
+    padding-bottom: var(--space-md);
+    border-bottom: 2px solid var(--wx-green-light);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.landmark-title::before {
+    content: '📍';
+    font-size: 20px;
+}
+
+.landmark-argument {
+    font-size: 16px;
+    color: var(--wx-text-primary);
+    line-height: 1.8;
+    padding: var(--space-lg);
+    background: linear-gradient(135deg, var(--wx-green-light), rgba(7, 193, 96, 0.05));
+    border-radius: var(--radius);
+    margin-bottom: var(--space-lg);
+    border-left: 4px solid var(--wx-green);
+    font-weight: 500;
+}
+
+.key-points {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-lg) 0;
+    background: var(--wx-gray-1);
+    border-radius: var(--radius);
+    padding: var(--space-lg);
+}
+
+.key-points li {
+    padding: var(--space-md) 0;
+    padding-left: var(--space-xl);
+    position: relative;
+    font-size: 15px;
+    color: var(--wx-text-primary);
+    line-height: 1.7;
+    border-bottom: 1px solid var(--wx-divider);
+}
+
+.key-points li:last-child {
+    border-bottom: none;
+}
+
+.key-points li::before {
+    content: '✓';
+    position: absolute;
+    left: var(--space-sm);
+    color: var(--wx-green);
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.insight-box {
+    padding: var(--space-lg);
+    background: linear-gradient(135deg, #fff9e6, #fffef5);
+    border-radius: var(--radius);
+    border-left: 4px solid #ffa500;
+    font-size: 15px;
+    color: var(--wx-text-primary);
+    margin: var(--space-lg) 0;
+    line-height: 1.7;
+    box-shadow: 0 2px 8px rgba(255, 165, 0, 0.1);
+}
+
+/* 论证地图内容区块标题 */
+.landmark-card h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--wx-green);
+    margin-top: var(--space-lg);
+    margin-bottom: var(--space-md);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.landmark-card h4::before {
+    content: '▸';
+    font-size: 18px;
+}
+
+.next-step {
+    font-size: 15px;
+    color: var(--wx-green);
+    font-weight: 500;
+    margin-top: var(--space-lg);
+    padding: var(--space-md) var(--space-lg);
+    background: var(--wx-green-light);
+    border-radius: var(--radius-sm);
+    border: 1px dashed var(--wx-green);
+    display: inline-block;
+}
+
+/* Key20洞见卡片 */
+.insight-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background: var(--wx-green);
+    color: white;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: var(--space-md);
+}
+
+.insight-card h3 {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--wx-text-primary);
+    margin-bottom: var(--space-md);
+}
+
+.insight-quote {
+    margin: var(--space-md) 0;
+}
+
+.insight-en {
+    font-size: 13px;
+    color: var(--wx-text-tertiary);
+    font-style: italic;
+    margin-bottom: var(--space-xs);
+}
+
+.insight-zh {
+    font-size: 15px;
+    color: var(--wx-text-primary);
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+.insight-analysis {
+    font-size: 14px;
+    color: var(--wx-text-secondary);
+    line-height: 1.7;
+    margin-top: var(--space-md);
+}
+
+.category-badge {
+    display: inline-block;
+    padding: var(--space-xs) var(--space-sm);
+    background: var(--wx-gray-1);
+    color: var(--wx-text-secondary);
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    margin-top: var(--space-md);
+}
+
+/* 学习路径 */
+.learning-path {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.path-section {
+    margin-bottom: var(--space-2xl);
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--wx-text-primary);
+    margin-bottom: var(--space-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.section-number {
+    display: inline-block;
+    padding: var(--space-xs) var(--space-md);
+    background: var(--wx-green-light);
+    color: var(--wx-green);
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.section-intro {
+    font-size: 14px;
+    color: var(--wx-text-secondary);
+    margin-bottom: var(--space-lg);
+}
+
+.concepts-in-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.concept-card-new {
+    background: var(--wx-white);
+    border: 1px solid var(--wx-divider);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.concept-card-new::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--wx-green), var(--wx-green-dark));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}
+
+.concept-card-new:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+    border-color: var(--wx-green-light);
+}
+
+.concept-card-new:hover::before {
+    transform: scaleX(1);
+}
+
+.concept-card-new.locked {
+    opacity: 0.6;
+    background: var(--wx-gray-1);
+}
+
+.concept-card-new.locked:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.concept-card-new.completed {
+    border-left: 4px solid var(--wx-green);
+    background: linear-gradient(to right, var(--wx-green-light), var(--wx-white));
+}
+
+.concept-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-sm);
+}
+
+.concept-header h3 {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--wx-text-primary);
+}
+
+.status-badge {
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    background: var(--wx-gray-1);
+    color: var(--wx-text-secondary);
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.status-badge.completed {
+    background: linear-gradient(135deg, var(--wx-green-light), rgba(7, 193, 96, 0.15));
+    color: var(--wx-green);
+    box-shadow: 0 2px 4px rgba(7, 193, 96, 0.1);
+}
+
+.status-badge.learning {
+    background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+    color: #856404;
+}
+
+.status-badge.locked {
+    opacity: 0.6;
+}
+
+.concept-description {
+    font-size: 14px;
+    color: var(--wx-text-secondary);
+    margin-bottom: var(--space-md);
+}
+
+.concept-meta {
+    display: flex;
+    gap: var(--space-md);
+    font-size: 13px;
+    color: var(--wx-text-tertiary);
+    margin-bottom: var(--space-md);
+}
+
+.start-learning-btn {
+    width: 100%;
+    padding: var(--space-md);
+    background: var(--wx-green);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-family: var(--font-family);
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.start-learning-btn:hover:not(:disabled) {
+    background: var(--wx-green-dark);
+}
+
+.start-learning-btn:disabled {
+    background: var(--wx-gray-2);
+    color: var(--wx-text-tertiary);
+    cursor: not-allowed;
+}
+
+/* 快速练习 */
+.quick-practice-section {
+    background: var(--wx-white);
+    border: 1px solid var(--wx-divider);
+    border-radius: var(--radius);
+    padding: var(--space-xl);
+    margin-top: var(--space-2xl);
+}
+
+.quick-practice-section h3 {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--wx-text-primary);
+    margin-bottom: var(--space-sm);
+}
+
+.quick-practice-section > p {
+    font-size: 14px;
+    color: var(--wx-text-secondary);
+    margin-bottom: var(--space-lg);
+}
+
+.quick-practices {
+    display: flex;
+    gap: var(--space-md);
+}
+
+.quick-practice-btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-lg);
+    background: var(--wx-gray-1);
+    border: 1px solid var(--wx-divider);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.quick-practice-btn:hover {
+    background: var(--wx-green-light);
+    border-color: var(--wx-green);
+}
+
+.practice-icon {
+    font-size: 24px;
+}
+
+.practice-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--wx-text-primary);
+}
+
+.practice-time {
+    font-size: 12px;
+    color: var(--wx-text-tertiary);
+}
+
+/* 工具箱 */
+.tools-container h2 {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--wx-text-primary);
+    text-align: center;
+    margin-bottom: var(--space-sm);
+}
+
+.tools-intro {
+    text-align: center;
+    font-size: 14px;
+    color: var(--wx-text-secondary);
+    margin-bottom: var(--space-xl);
+}
+
+.tools-sections {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.tool-section {
+    margin-bottom: var(--space-2xl);
+}
+
+.tool-section h3 {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--wx-text-primary);
+    margin-bottom: var(--space-sm);
+}
+
+.tool-section > p {
+    font-size: 14px;
+    color: var(--wx-text-secondary);
+    margin-bottom: var(--space-lg);
+}
+
+/* 模态框 */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+    transition: all 0.3s ease;
+}
+
+.modal.active {
+    display: flex;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.modal-content {
+    background: var(--wx-white);
+    border-radius: var(--radius-lg);
+    max-width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    animation: scaleIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    padding: var(--space-xl);
+}
+
+.modal-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+    background: var(--wx-gray-1);
+    border-radius: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+    background: var(--wx-gray-3);
+    border-radius: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+    background: var(--wx-gray-4);
+}
+
+.modal-close {
+    position: sticky;
+    top: 0;
+    right: var(--space-lg);
+    float: right;
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--wx-text-tertiary);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: var(--space-sm);
+    z-index: 10;
+}
+
+.modal-close:hover {
+    color: var(--wx-text-primary);
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+    :root {
+        --space-xl: 20px;
+        --space-2xl: 28px;
+    }
+
+    .main-content {
+        padding: var(--space-md);
+    }
+    
+    .nav-links {
+        gap: var(--space-xs);
+    }
+    
+    .nav-link {
+        padding: var(--space-xs) var(--space-sm);
+        font-size: 12px;
+    }
+
+    .nav-brand {
+        font-size: 14px;
+    }
+    
+    .chapter-grid,
+    .insights-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+    }
+
+    .chapter-card,
+    .insight-card {
+        padding: var(--space-lg);
+    }
+    
+    .quick-practices {
+        flex-direction: column;
+    }
+    
+    .argument-path {
+        padding-left: 24px;
+    }
+
+    .argument-path::before {
+        left: 8px;
+        width: 2px;
+    }
+
+    .landmark-card {
+        padding: var(--space-lg);
+        margin-bottom: var(--space-lg);
+    }
+
+    .landmark-card::before {
+        left: -19px;
+        top: 20px;
+        width: 10px;
+        height: 10px;
+        border-width: 2px;
+    }
+
+    .landmark-title {
+        font-size: 17px;
+    }
+
+    .landmark-argument {
+        font-size: 15px;
+        padding: var(--space-md);
+    }
+
+    .map-start-point {
+        padding: var(--space-lg);
+    }
+
+    .map-start-point h3 {
+        font-size: 16px;
+    }
+
+    .map-start-point p {
+        font-size: 15px;
+    }
+
+    .key-points {
+        padding: var(--space-md);
+    }
+
+    .key-points li {
+        font-size: 14px;
+        padding: var(--space-sm) 0;
+        padding-left: var(--space-lg);
+    }
+    
+    .book-insights-nav {
+        overflow-x: scroll;
+        -webkit-overflow-scrolling: touch;
+        gap: var(--space-xs);
+        padding: var(--space-xs);
+    }
+
+    .insight-nav-btn {
+        padding: var(--space-xs) var(--space-md);
+        font-size: 13px;
+    }
+
+    .modal-content {
+        max-width: 95%;
+        max-height: 95vh;
+        padding: var(--space-lg);
+    }
+
+    .book-title {
+        font-size: 24px;
+    }
+
+    .welcome-container {
+        padding: var(--space-lg);
+    }
+
+    .value-proposition {
+        max-width: 100%;
+    }
+
+    .game-area {
+        min-height: 200px;
+    }
+
+    .thought-bubble {
+        font-size: 13px;
+        padding: var(--space-sm) var(--space-md);
+    }
+
+    .breathing-circle {
+        width: 80px;
+        height: 80px;
+    }
+
+    .timer-circle {
+        width: 80px;
+        height: 80px;
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-nav {
+        height: 48px;
+        padding: 0 var(--space-md);
+    }
+
+    .nav-link {
+        padding: var(--space-xs);
+        font-size: 11px;
+    }
+
+    .stat-card {
+        flex-direction: column;
+        text-align: center;
+        gap: var(--space-md);
+    }
+
+    .concept-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-sm);
+    }
+}
+
+/* 隐藏滚动条但保持功能 */
+.book-insights-nav::-webkit-scrollbar {
+    display: none;
+}
+
+.book-insights-nav {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* 游戏统计和结果增强 */
+.game-stats {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: var(--space-lg);
+    background: linear-gradient(135deg, var(--wx-gray-1), var(--wx-white));
+    border-radius: var(--radius);
+    margin: var(--space-lg) 0;
+    gap: var(--space-md);
+}
+
+.game-stats .stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--wx-text-secondary);
+}
+
+.game-stats .timer {
+    color: var(--wx-green);
+    font-weight: 600;
+}
+
+.result-stats {
+    display: flex;
+    justify-content: space-around;
+    margin: var(--space-xl) 0;
+    gap: var(--space-md);
+}
+
+.result-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-lg);
+    background: linear-gradient(135deg, var(--wx-gray-1), var(--wx-white));
+    border-radius: var(--radius);
+    flex: 1;
+}
+
+.result-label {
+    font-size: 13px;
+    color: var(--wx-text-secondary);
+}
+
+.result-value {
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--wx-green);
+}
+
+.result-insight {
+    background: var(--wx-green-light);
+    border-left: 3px solid var(--wx-green);
+    padding: var(--space-lg);
+    border-radius: var(--radius-sm);
+    margin: var(--space-xl) 0;
+}
+
+.result-insight p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--wx-text-primary);
+    margin: 0;
+}
+
+.result-actions {
+    display: flex;
+    gap: var(--space-md);
+    margin-top: var(--space-xl);
+}
+
+.result-actions button {
+    flex: 1;
+}
+
+/* 卡片按钮样式 */
+.card-btn {
+    padding: var(--space-md) var(--space-lg);
+    background: var(--wx-white);
+    border: 1px solid var(--wx-divider);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    color: var(--wx-text-secondary);
+    cursor: pointer;
+    font-family: var(--font-family);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-weight: 500;
+}
+
+.card-btn:hover {
+    background: var(--wx-gray-1);
+    border-color: var(--wx-green);
+    color: var(--wx-text-primary);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* 练习完成样式 */
+.practice-completion {
+    text-align: center;
+    padding: var(--space-2xl) var(--space-lg);
+}
+
+.practice-completion h3 {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--wx-text-primary);
+    margin: var(--space-lg) 0;
+}
+
+.practice-completion p {
+    font-size: 15px;
+    color: var(--wx-text-secondary);
+    line-height: 1.6;
+}
+
+.completion-actions {
+    display: flex;
+    gap: var(--space-md);
+    margin-top: var(--space-xl);
+    justify-content: center;
+}
+
+/* 游戏屏幕增强 */
+.game-screen,
+.practice-screen {
+    padding: var(--space-xl);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.game-intro,
+.practice-duration {
+    text-align: center;
+    color: var(--wx-text-secondary);
+    line-height: 1.8;
+    margin: var(--space-lg) 0;
+}
+
+.duration-badge {
+    display: inline-block;
+    padding: var(--space-xs) var(--space-sm);
+    background: linear-gradient(135deg, var(--wx-green-light), rgba(7, 193, 96, 0.15));
+    color: var(--wx-green);
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: var(--space-sm);
+}
+
+/* 等级选择器 */
+.level-selector {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    margin-top: var(--space-xl);
+}
+
+.level-btn {
+    padding: var(--space-lg);
+    background: var(--wx-white);
+    border: 2px solid var(--wx-divider);
+    border-radius: var(--radius);
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--wx-text-primary);
+    cursor: pointer;
+    font-family: var(--font-family);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.level-btn:hover {
+    border-color: var(--wx-green);
+    background: var(--wx-green-light);
+    transform: translateX(8px);
+    box-shadow: 0 4px 12px rgba(7, 193, 96, 0.15);
+}
+
+/* 增强的动画效果 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInFromLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+@keyframes breathe {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.insight-section.active {
+    animation: fadeIn 0.4s ease;
+}
+
+.chapter-card {
+    animation: fadeIn 0.4s ease;
+    animation-fill-mode: both;
+}
+
+.chapter-card:nth-child(1) { animation-delay: 0.05s; }
+.chapter-card:nth-child(2) { animation-delay: 0.1s; }
+.chapter-card:nth-child(3) { animation-delay: 0.15s; }
+.chapter-card:nth-child(4) { animation-delay: 0.2s; }
+.chapter-card:nth-child(5) { animation-delay: 0.25s; }
+
+/* 呼吸圆圈动画 */
+.breathing-circle {
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(135deg, var(--wx-green), var(--wx-green-dark));
+    border-radius: 50%;
+    animation: breathe 4s ease-in-out infinite;
+    box-shadow: 0 4px 20px rgba(7, 193, 96, 0.3);
+}
+
+.breathing-circle-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: var(--space-2xl);
+}
+
+/* 思维气泡动画 */
+.thought-bubble {
+    position: absolute;
+    padding: var(--space-md) var(--space-lg);
+    background: var(--wx-white);
+    border: 1px solid var(--wx-divider);
+    border-radius: var(--radius-lg);
+    font-size: 14px;
+    color: var(--wx-text-primary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    animation: float 3s ease-in-out infinite;
+    box-shadow: var(--shadow);
+}
+
+.thought-bubble:hover {
+    transform: scale(1.05);
+    box-shadow: var(--shadow-md);
+    border-color: var(--wx-green);
+}
+
+.thought-bubble.identified {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+    color: white;
+    border-color: transparent;
+    animation: pulse 0.3s ease;
+}
+
+.thought-bubble.observed {
+    background: linear-gradient(135deg, var(--wx-green-light), rgba(7, 193, 96, 0.2));
+    border-color: var(--wx-green);
+    opacity: 0;
+}
+
+/* 游戏区域 */
+.game-area {
+    position: relative;
+    min-height: 300px;
+    background: linear-gradient(to bottom, var(--wx-gray-1), var(--wx-white));
+    border-radius: var(--radius);
+    margin: var(--space-xl) 0;
+    border: 2px dashed var(--wx-divider);
+}
+
+.distraction-area {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+}
+
+.distraction-text {
+    position: absolute;
+    padding: var(--space-sm) var(--space-md);
+    background: rgba(255, 107, 107, 0.9);
+    color: white;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    animation: fadeIn 0.5s ease;
+}
+
+/* 进度条增强 */
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: var(--wx-gray-2);
+    border-radius: 4px;
+    overflow: hidden;
+    margin: var(--space-md) 0;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--wx-green), var(--wx-green-dark));
+    border-radius: 4px;
+    transition: width 0.5s ease;
+    box-shadow: 0 0 10px rgba(7, 193, 96, 0.3);
+}
+
+/* 计时器圆圈 */
+.timer-circle {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(135deg, var(--wx-green-light), rgba(7, 193, 96, 0.2));
+    border: 4px solid var(--wx-green);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    font-weight: 500;
+    color: var(--wx-green);
+    margin: var(--space-xl) auto;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+/* 卡片悬停效果增强 */
+.game-card,
+.practice-card {
+    background: var(--wx-white);
+    border: 1px solid var(--wx-divider);
+    border-radius: var(--radius);
+    padding: var(--space-xl);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.game-card::before,
+.practice-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(7, 193, 96, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.game-card:hover::before,
+.practice-card:hover::before {
+    left: 100%;
+}
+
+.game-card:hover,
+.practice-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    border-color: var(--wx-green);
+}
+
+/* 完成动画 */
+.completion-icon {
+    font-size: 64px;
+    animation: scaleIn 0.5s ease;
+}
+
+/* 时间线样式 */
+.timeline-item {
+    background: var(--wx-white);
+    border: 1px solid var(--wx-divider);
+    border-left: 3px solid var(--wx-green);
+    border-radius: var(--radius-sm);
+    padding: var(--space-md);
+    margin-bottom: var(--space-md);
+    animation: slideInFromLeft 0.3s ease;
+    transition: all 0.2s ease;
+}
+
+.timeline-item:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateX(4px);
+}
+
+.timeline-date {
+    font-size: 12px;
+    color: var(--wx-text-tertiary);
+    margin-bottom: var(--space-xs);
+}
+
+.timeline-type {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--wx-green);
+    margin-bottom: var(--space-xs);
+}
+
+.timeline-text {
+    font-size: 14px;
+    color: var(--wx-text-secondary);
+}
+    </style>
+</head>
+<body>
+    <!-- 欢迎屏幕 -->
+    <div id="welcomeScreen" class="screen active">
+        <div class="welcome-container">
+            <div class="value-proposition">
+                <h1 class="book-title">《当下的力量》</h1>                
+                <div class="book-intro">
+                    <p class="highlight">📖 全球销量超过500万册的心理疗愈经典</p>
+                    <p class="description">
+                        <strong>核心真理</strong>：当下是唯一真实的时刻，<br>
+                        临在于当下，就是从思维制造的痛苦中解脱。
+                    </p>
+                </div>
+
+                <div class="user-problem">
+                    <h3>但这本书很难读懂...</h3>
+                    <div class="problems-list">
+                        <div class="problem-item">❌ 概念太抽象（临在、小我、本体...）</div>
+                        <div class="problem-item">❌ 不知道怎么练习</div>
+                        <div class="problem-item">❌ 读了很多遍还是不懂</div>
+                    </div>
+                </div>
+
+                <div class="solution">
+                    <h3>这个工具会帮你：</h3>
+                    <div class="benefits-list">
+                        <div class="benefit-item">
+                            <span class="icon">📚</span>
+                            <div class="benefit-text">
+                                <strong>深度理解全书</strong>
+                                <p>10章核心命题 + 论证地图 + 20个反常识洞见</p>
+                            </div>
+                        </div>
+                        <div class="benefit-item">
+                            <span class="icon">🎯</span>
+                            <div class="benefit-text">
+                                <strong>系统学习路径</strong>
+                                <p>5个核心概念，自由选择学习顺序</p>
+                            </div>
+                        </div>
+                        <div class="benefit-item">
+                            <span class="icon">🎮</span>
+                            <div class="benefit-text">
+                                <strong>体验式深化</strong>
+                                <p>游戏和练习让抽象概念变得可感知</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mbti-section">
+                    <details>
+                        <summary>🎯 选择你的学习风格（可选）</summary>
+                        <div class="mbti-selector">
+                            <select id="mbtiSelect">
+                                <option value="">通用版本</option>
+                                <optgroup label="分析师 (NT)">
+                                    <option value="INTJ">INTJ</option>
+                                    <option value="INTP">INTP</option>
+                                    <option value="ENTJ">ENTJ</option>
+                                    <option value="ENTP">ENTP</option>
+                                </optgroup>
+                                <optgroup label="外交官 (NF)">
+                                    <option value="INFJ">INFJ</option>
+                                    <option value="INFP">INFP</option>
+                                    <option value="ENFJ">ENFJ</option>
+                                    <option value="ENFP">ENFP</option>
+                                </optgroup>
+                                <optgroup label="守护者 (SJ)">
+                                    <option value="ISTJ">ISTJ</option>
+                                    <option value="ISFJ">ISFJ</option>
+                                    <option value="ESTJ">ESTJ</option>
+                                    <option value="ESFJ">ESFJ</option>
+                                </optgroup>
+                                <optgroup label="探险家 (SP)">
+                                    <option value="ISTP">ISTP</option>
+                                    <option value="ISFP">ISFP</option>
+                                    <option value="ESTP">ESTP</option>
+                                    <option value="ESFP">ESFP</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                    </details>
+                </div>
+
+                <button class="primary-btn large" id="startBtn">
+                    开始深度理解这本书 →
+                </button>
+                <p class="time-estimate">系统化的书籍洞见 + 可体验的学习路径</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主应用页面 -->
+    <div id="homeScreen" class="screen">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <span class="book-icon">📖</span>
+                当下的力量
+            </div>
+            <div class="nav-links">
+                <button class="nav-link active" data-view="book">理解全书</button>
+                <button class="nav-link" data-view="learn">学习概念</button>
+                <button class="nav-link" data-view="tools">工具箱</button>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <!-- 理解全书视图 -->
+            <div id="bookView" class="view active">
+                <div class="learning-header">
+                    <h1>深度理解《当下的力量》</h1>
+                    <p class="learning-subtitle">系统化的洞见地图，让晦涩的智慧变得清晰</p>
+                </div>
+
+                <!-- 书籍洞见导航 -->
+                <div class="book-insights-nav">
+                    <button class="insight-nav-btn active" data-section="chapters">章节命题</button>
+                    <button class="insight-nav-btn" data-section="ultimate">终极命题</button>
+                    <button class="insight-nav-btn" data-section="map">论证地图</button>
+                    <button class="insight-nav-btn" data-section="key20">关键洞见</button>
+                </div>
+
+                <!-- 章节核心命题 -->
+                <div id="chaptersSection" class="insight-section active">
+                    <h2 style="font-family: var(--font-serif); color: var(--color-bamboo); margin-bottom: var(--spacing-lg);">
+                        10章核心命题
+                    </h2>
+                    <p style="color: var(--color-earth); margin-bottom: var(--spacing-xl);">
+                        每个章节背后的核心命题，快速理解每章回答了什么问题，颠覆了何种观点
+                    </p>
+                    <div id="chaptersGrid" class="chapter-grid"></div>
+                </div>
+
+                <!-- 终极核心命题 -->
+                <div id="ultimateSection" class="insight-section">
+                    <div class="ultimate-proposition">
+                        <h2>终极核心命题</h2>
+                        <p style="color: var(--color-earth); margin-bottom: var(--spacing-lg);">
+                            一个能提领全书的意义黑洞，可以无限扩展的智慧源头
+                        </p>
+                        <div id="ultimateContent"></div>
+                    </div>
+                </div>
+
+                <!-- 论证地图 -->
+                <div id="mapSection" class="insight-section">
+                    <div class="learning-header">
+                        <h2>论证地图</h2>
+                        <p class="learning-subtitle">从起点到终点，6个地标构成清晰的理解路径</p>
+                    </div>
+
+                    <div class="map-start-point">
+                        <h3>起点</h3>
+                        <p id="startPoint"></p>
+                    </div>
+                    
+                    <div id="landmarksPath" class="argument-path"></div>
+                </div>
+
+                <!-- Key20 洞见 -->
+                <div id="key20Section" class="insight-section">
+                    <h2 style="font-family: var(--font-serif); color: var(--color-bamboo); margin-bottom: var(--spacing-md);">
+                        Key20：20个反常识洞见
+                    </h2>
+                    <p style="color: var(--color-earth); margin-bottom: var(--spacing-xl);">
+                        精选最颠覆性的命题，中英对照 + 深度解析
+                    </p>
+                    <div id="key20Grid" class="insights-grid"></div>
+                </div>
+            </div>
+
+            <!-- 学习概念视图（保留之前的） -->
+            <div id="learnView" class="view">
+                <div class="learning-header">
+                    <h1>系统学习核心概念</h1>
+                    <p class="learning-subtitle">自由选择学习顺序，想学哪个学哪个</p>
+                </div>
+
+                <div class="learning-path">
+                    <div class="path-section">
+                        <h2 class="section-title">
+                            <span class="section-number">第一部分</span>
+                            你不是你的思维
+                        </h2>
+                        <p class="section-intro">这是全书的基础。理解这一点，后面的一切才能明白。</p>
+                        
+                        <div class="concepts-in-section">
+                            <div class="concept-card-new" data-concept="presence">
+                                <div class="concept-header">
+                                    <h3>1. 临在 (Presence)</h3>
+                                    <span class="status-badge not-started">未开始</span>
+                                </div>
+                                <p class="concept-description">超越思维的纯粹觉知</p>
+                                <div class="concept-meta">
+                                    <span class="reading-time">⏱️ 5分钟</span>
+                                    <span class="has-exercise">✨ 含体验练习</span>
+                                </div>
+                                <button class="start-learning-btn">开始学习</button>
+                            </div>
+
+                            <div class="concept-card-new" data-concept="watching_thinker">
+                                <div class="concept-header">
+                                    <h3>2. 观察思维</h3>
+                                    <span class="status-badge not-started">未开始</span>
+                                </div>
+                                <p class="concept-description">看着念头来去，不被卷入</p>
+                                <div class="concept-meta">
+                                    <span class="reading-time">⏱️ 5分钟</span>
+                                    <span class="has-game">🎮 含互动游戏</span>
+                                </div>
+                                <button class="start-learning-btn">开始学习</button>
+                            </div>
+
+                            <div class="concept-card-new" data-concept="ego">
+                                <div class="concept-header">
+                                    <h3>3. 小我的真相</h3>
+                                    <span class="status-badge not-started">未开始</span>
+                                </div>
+                                <p class="concept-description">虚假的自我认同</p>
+                                <div class="concept-meta">
+                                    <span class="reading-time">⏱️ 8分钟</span>
+                                    <span class="has-exercise">✨ 含识别练习</span>
+                                </div>
+                                <button class="start-learning-btn">开始学习</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="path-section">
+                        <h2 class="section-title">
+                            <span class="section-number">第二部分</span>
+                            意识：逃离痛苦的出路
+                        </h2>
+                        <p class="section-intro">理解了思维的本质，现在学习如何超越它。</p>
+                        
+                        <div class="concepts-in-section">
+                            <div class="concept-card-new" data-concept="now">
+                                <div class="concept-header">
+                                    <h3>4. 当下时刻</h3>
+                                    <span class="status-badge not-started">未开始</span>
+                                </div>
+                                <p class="concept-description">唯一真实的时刻</p>
+                                <div class="concept-meta">
+                                    <span class="reading-time">⏱️ 6分钟</span>
+                                    <span class="has-game">🎮 含互动游戏</span>
+                                </div>
+                                <button class="start-learning-btn">开始学习</button>
+                            </div>
+
+                            <div class="concept-card-new" data-concept="awareness">
+                                <div class="concept-header">
+                                    <h3>5. 纯粹觉知</h3>
+                                    <span class="status-badge not-started">未开始</span>
+                                </div>
+                                <p class="concept-description">意识的容器</p>
+                                <div class="concept-meta">
+                                    <span class="reading-time">⏱️ 7分钟</span>
+                                    <span class="has-exercise">✨ 含觉知练习</span>
+                                </div>
+                                <button class="start-learning-btn">开始学习</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="quick-practice-section">
+                        <h3>📌 随时可用的快速练习</h3>
+                        <p>当你感到焦虑、思维过载时：</p>
+                        <div class="quick-practices">
+                            <button class="quick-practice-btn" data-practice="three_breaths">
+                                <span class="practice-icon">🌬️</span>
+                                <span class="practice-name">3次呼吸</span>
+                                <span class="practice-time">30秒</span>
+                            </button>
+                            <button class="quick-practice-btn" data-practice="body_scan">
+                                <span class="practice-icon">🧘</span>
+                                <span class="practice-name">身体扫描</span>
+                                <span class="practice-time">60秒</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 工具箱视图 -->
+            <div id="toolsView" class="view">
+                <div class="tools-container">
+                    <h2>辅助工具</h2>
+                    <p class="tools-intro">深化理解和日常练习的工具</p>
+                    
+                    <div class="tools-sections">
+                        <div class="tool-section">
+                            <h3>🎮 互动游戏</h3>
+                            <p>让抽象概念变得可感知</p>
+                            <div class="games-grid" id="gamesList"></div>
+                        </div>
+                        
+                        <div class="tool-section">
+                            <h3>🧘 日常练习</h3>
+                            <p>从理解到活出来</p>
+                            <div class="practices-grid" id="practicesList"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 模态框（保留之前的） -->
+    <div id="conceptModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <div id="conceptDetails"></div>
+        </div>
+    </div>
+
+    <div id="gameModal" class="modal">
+        <div class="modal-content game-container">
+            <button class="modal-close">&times;</button>
+            <div id="gameContent"></div>
+        </div>
+    </div>
+
+    <div id="practiceModal" class="modal">
+        <div class="modal-content practice-container">
+            <button class="modal-close">&times;</button>
+            <div id="practiceContent"></div>
+        </div>
+    </div>
+
+    <script>
+// 书籍洞见数据
+const BOOK_INSIGHTS = {
+    // 章节核心命题
+    chapters: [
+        {
+            id: 'ch1',
+            number: '第一章',
+            title: '你不等于你的大脑',
+            coreProposition: '人类痛苦的根源在于与思维认同，将无休止的思考误认为是"我"。',
+            question: '为什么我们会持续感到不安和痛苦？',
+            subversion: '传统认为"我思故我在"，本章揭示思维是痛苦的制造者，而非真实自我。',
+            value: '指出开悟的最大障碍——强迫性思维。',
+            relatedConcepts: ['presence', 'ego', 'watching_thinker']
+        },
+        {
+            id: 'ch2',
+            number: '第二章',
+            title: '意识：摆脱痛苦的途径',
+            coreProposition: '大部分人类痛苦是不必要的，源于对当下的抗拒和对思维的无意识认同。',
+            question: '如何终止痛苦的循环？',
+            subversion: '痛苦不是必然的，而是思维模式的产物。',
+            value: '提出"痛苦之身"概念，解释集体和个人的情绪包袱。',
+            relatedConcepts: ['presence', 'now']
+        },
+        {
+            id: 'ch3',
+            number: '第三章',
+            title: '深深地进入当下',
+            coreProposition: '时间是思维的产物，真实的生命只存在于当下这一刻。',
+            question: '如何从时间的囚禁中解脱？',
+            subversion: '过去和未来都是幻象，唯有当下真实存在。',
+            value: '终结"时间等于生命"的错觉。',
+            relatedConcepts: ['now', 'awareness']
+        },
+        {
+            id: 'ch4',
+            number: '第四章',
+            title: '思维逃避当下的策略',
+            coreProposition: '小我通过制造问题、戏剧化、寻求完满来逃避当下。',
+            question: '为什么我们总是无法安住当下？',
+            subversion: '问题意识本身就是障碍，生命情境不等于问题。',
+            value: '揭示小我维持自身的各种策略。',
+            relatedConcepts: ['ego', 'now']
+        },
+        {
+            id: 'ch5',
+            number: '第五章',
+            title: '临在状态',
+            coreProposition: '临在是超越思维的纯粹觉知，是开悟的本质状态。',
+            question: '什么是真正的开悟状态？',
+            subversion: '开悟不是超人类成就，而是自然的本体合一状态。',
+            value: '将神秘的"开悟"还原为可体验的临在。',
+            relatedConcepts: ['presence', 'awareness']
+        },
+        {
+            id: 'ch6',
+            number: '第六章',
+            title: '内在身体',
+            coreProposition: '通过感知内在身体的能量场，可以锚定在当下，这是连接本体的最有效方法之一。',
+            question: '如何在日常生活中保持临在？',
+            subversion: '身体不仅是物质形式，更是通往本体的门户。',
+            value: '提供具体可操作的临在练习方法。',
+            relatedConcepts: ['presence', 'awareness', 'being']
+        },
+        {
+            id: 'ch7',
+            number: '第七章',
+            title: '通往当下的入口',
+            coreProposition: '日常生活中的每个时刻和情境都可以成为进入当下的门户。',
+            question: '在忙碌的生活中如何实践临在？',
+            subversion: '平凡时刻比特殊体验更能揭示真理。',
+            value: '将抽象的灵性教导转化为生活实践。',
+            relatedConcepts: ['now', 'presence', 'awareness']
+        },
+        {
+            id: 'ch8',
+            number: '第八章',
+            title: '开悟的关系',
+            coreProposition: '真正的关系始于对自己和他人的临在，而非小我间的互动。',
+            question: '如何在关系中保持觉知和临在？',
+            subversion: '关系不是用来满足小我需求的，而是觉醒的机会。',
+            value: '揭示关系中的小我模式和超越之道。',
+            relatedConcepts: ['ego', 'presence', 'being']
+        },
+        {
+            id: 'ch9',
+            number: '第九章',
+            title: '超越快乐与不快乐的平安',
+            coreProposition: '真正的平安和喜悦不依赖外在条件，源自与本体的连接。',
+            question: '如何获得不被外界影响的内在平安？',
+            subversion: '追求快乐本身就是痛苦的延续，平安超越二元对立。',
+            value: '指向超越所有心理状态的根本幸福。',
+            relatedConcepts: ['being', 'presence', 'now']
+        },
+        {
+            id: 'ch10',
+            number: '第十章',
+            title: '臣服的意义',
+            coreProposition: '臣服不是放弃，而是停止对当下的内在抗拒，这是最深刻的力量。',
+            question: '如何面对无法改变的生活情境？',
+            subversion: '真正的力量来自接纳，而非对抗。',
+            value: '解决"接纳现状"与"积极改变"的表面矛盾。',
+            relatedConcepts: ['now', 'presence', 'being']
+        }
+    ],
+    
+    // 终极核心命题
+    ultimateProposition: {
+        statement: '当下时刻是通往本体的唯一入口，从时间幻象中觉醒即是开悟。',
+        expansion: [
+            '时间是幻象 → 过去和未来不真实存在',
+            '思维创造时间 → 与思维认同就陷入时间',
+            '当下是唯一实在 → 生命只在此刻展开',
+            '本体超越形式 → 真实自我不受时间限制',
+            '临在即开悟 → 安住当下就是觉醒'
+        ]
+    },
+    
+    // 论证地图
+    argumentMap: {
+        startPoint: '人类的痛苦源于与思维的认同和对当下的抗拒。通过觉察思维、安住当下，可以接触到超越形式的本体，这就是开悟——受苦的终结。',
+        landmarks: [
+            {
+                id: 'landmark1',
+                title: '识别虚假自我（小我）',
+                argument: '你所认为的"我"其实是思维制造的幻象。真实的你是那个能够觉察思维的存在。',
+                keyPoints: [
+                    '如果你能观察你的思维，那么观察者不可能等于被观察物',
+                    '思维是工具，不是使用者',
+                    '小我通过思维认同维持自身，制造"我"和"我的故事"'
+                ],
+                experiment: '谁在听我脑海中的声音？当你问出这个问题，你已经不是那个声音了。',
+                nextStep: '识别了虚假自我后，自然要问：真实的我是谁？'
+            },
+            {
+                id: 'landmark2',
+                title: '揭示时间幻象',
+                argument: '过去只是记忆痕迹，未来只是思维投射，唯有当下真实存在。',
+                keyPoints: [
+                    '任何事物都不可能存在于当下之外',
+                    '你的生命从来没有不在当下这一刻发生',
+                    '"明天"永远不会到来，到来的永远是"当下"'
+                ],
+                insight: '时间不珍贵，因为它是幻象。珍贵的是不在时间内的那一点——当下。',
+                nextStep: '既然只有当下真实，为什么我们总是逃离当下？'
+            },
+            {
+                id: 'landmark3',
+                title: '理解痛苦机制',
+                argument: '痛苦 = 对当下的抗拒 × 思维认同程度',
+                keyPoints: [
+                    '思维通过否认当下来维持控制',
+                    '抗拒当下就是抗拒生命本身',
+                    '未被觉察的思维自动产生痛苦'
+                ],
+                examples: [
+                    '堵车时的烦躁：不是堵车本身，而是对"应该更快"的抗拒',
+                    '失恋的痛苦：不只是失去，更是思维讲述的"我的故事"'
+                ],
+                nextStep: '如何终止这种痛苦模式？'
+            },
+            {
+                id: 'landmark4',
+                title: '进入当下的实践',
+                argument: '通过内在身体觉知和感官临在，可以锚定在当下并超越思维。',
+                practices: [
+                    '觉察思维：成为思维的观察者，而非认同者',
+                    '感受内在身体：注意力向内，感受能量场',
+                    '全然接纳：对当下说"是"',
+                    '感官临在：完全融入此刻的视听触'
+                ],
+                turning: '接纳不是被动放弃，而是清醒认知后的明智行动。',
+                nextStep: '当下体验之后是什么？'
+            },
+            {
+                id: 'landmark5',
+                title: '接触本体',
+                argument: '在思维静止、深深临在时，你会触及超越形式的永恒维度——本体。',
+                description: [
+                    '本体是"至一生命"，超越所有形式',
+                    '它不可被思维理解，只能被感受',
+                    '临在就是本体的显现'
+                ],
+                deepInsight: '"我是"的感觉不需要思维支撑，这就是本体。',
+                nextStep: '这种体验如何改变日常生活？'
+            },
+            {
+                id: 'landmark6',
+                title: '活在觉醒中',
+                argument: '开悟不是遥不可及的状态，而是当下临在的持续深化。',
+                integration: [
+                    '在关系中保持临在',
+                    '在挑战中选择接纳',
+                    '在日常中活出觉知'
+                ],
+                wisdom: '不是"获得"开悟，而是"移除"遮蔽本体的无意识模式。'
+            }
+        ]
+    },
+    
+    // Key20 洞见
+    key20: [
+        {
+            id: 'insight1',
+            title: '思维是工具，不是主人',
+            en: 'You are not your mind.',
+            zh: '你不是你的思维。',
+            analysis: '传统哲学"我思故我在"将思维等同于存在本身。托利颠覆这一点：思维只是工具，真实的你是能够觉察思维的那个存在。就像你不等于你的手机，尽管你使用它。这个洞见是整本书的基石。',
+            category: 'foundation'
+        },
+        {
+            id: 'insight2',
+            title: '时间的虚幻本质',
+            en: 'Time isn\'t precious at all, because it is an illusion.',
+            zh: '时间一点儿也不珍贵，因为它仅仅是一种幻象。',
+            analysis: '现代社会将"时间管理"奉为圭臬，认为时间最珍贵。托利揭示：真正珍贵的是不在时间内的"当下"。过去只是记忆,未来只是想象，真实存在只有此刻。这颠覆了整个效率文化的基础。',
+            category: 'foundation'
+        },
+        {
+            id: 'insight3',
+            title: '痛苦的自愿性',
+            en: 'The greater part of human pain is unnecessary.',
+            zh: '人类的很大一部分痛苦是没有必要的。',
+            analysis: '我们习惯认为痛苦是生活的必然。托利指出：身体的疼痛无法避免，但心理痛苦是思维对当下抗拒的产物。痛苦程度=抗拒程度×思维认同。这意味着我们对痛苦有选择权。',
+            category: 'foundation'
+        },
+        {
+            id: 'insight4',
+            title: '当下是唯一的实在',
+            en: 'Nothing ever happened in the past; it happened in the Now.',
+            zh: '任何事都不曾发生在过去，都发生在当下。',
+            analysis: '即使回忆过去，回忆的行为也发生在当下。预期未来，预期本身也在当下。你的整个生命，从未离开过"此刻"这个空间。这个洞见彻底消解了时间的实在性。',
+            category: 'foundation'
+        },
+        {
+            id: 'insight5',
+            title: '小我以问题为生',
+            en: 'The ego needs problems, conflict, and "enemies" to strengthen itself.',
+            zh: '小我需要问题、冲突和"敌人"来强化自己。',
+            analysis: '为什么生活总有解决不完的问题？因为小我通过问题意识维持自身。没有问题，虚假自我就失去存在感。所以小我潜意识地创造或维持问题。认识到这一点，你就理解了为什么"解决问题"常常导致新问题。',
+            category: 'practice'
+        },
+        {
+            id: 'insight6',
+            title: '接纳的力量',
+            en: 'Surrender is the simple but profound wisdom of yielding to rather than opposing the flow of life.',
+            zh: '臣服是顺从而不是对抗生命之流的简单而深刻的智慧。',
+            analysis: '"臣服"被误解为消极放弃。实际上，臣服是接纳当下后的明智行动。抗拒消耗能量且无效，接纳释放能量并带来清晰。这不是宿命论，而是行动的更高智慧。',
+            category: 'practice'
+        },
+        {
+            id: 'insight7',
+            title: '开悟的去神秘化',
+            en: 'Enlightenment is simply your natural state of felt oneness with Being.',
+            zh: '开悟就是一种简单的与本体合一的自然状态。',
+            analysis: '传统将开悟描述为超人类成就，遥不可及。托利将其还原为"本体合一的自然状态"。就像鱼发现水，开悟是认出一直存在的真实。这个去神秘化使开悟变得可及。',
+            category: 'understanding'
+        },
+        {
+            id: 'insight8',
+            title: '痛苦之身的集体性',
+            en: 'The pain-body is the accumulated emotional pain from your past and from humanity\'s collective past.',
+            zh: '痛苦之身是你过去以及人类集体过去积累的情绪痛苦。',
+            analysis: '为什么有时情绪反应远超事件本身？因为触发了"痛苦之身"——个人和集体的情绪累积。它像实体般存活,需要负面情绪喂养。这解释了情绪的非理性强度。',
+            category: 'understanding'
+        },
+        {
+            id: 'insight9',
+            title: '观察者的解放',
+            en: 'The moment you start watching the thinker, a higher level of consciousness becomes activated.',
+            zh: '当你开始观察思维者,一个更高层次的意识就被激活了。',
+            analysis: '你无法停止思维,但可以成为思维的观察者。观察本身就创造了距离,你不再完全认同思维。这个简单的转换(从认同到观察)就是意识的革命性跃迁。',
+            category: 'practice'
+        },
+        {
+            id: 'insight10',
+            title: '关系的真正目的',
+            en: 'Love is not a relationship. Love is a state of Being.',
+            zh: '爱不是一种关系。爱是一种存在状态。',
+            analysis: '我们在关系中寻找完整感,但这导致依赖和痛苦。真正的爱不是小我的需求满足,而是临在状态的自然流露。关系的目的不是幸福,而是带你更深入当下、更深入意识。',
+            category: 'integration'
+        },
+        {
+            id: 'insight11',
+            title: '内在身体的门户',
+            en: 'The body that you can see and touch is only a thin outer shell.',
+            zh: '你能看见和触摸的身体只是一个薄薄的外壳。',
+            analysis: '我们把身体视为纯物质对象。托利指出：感知内在身体的能量场是最简单的临在方法。将注意力带入手、脚、腹部，感受内在的生命力，你就锚定在当下了。',
+            category: 'practice'
+        },
+        {
+            id: 'insight12',
+            title: '等待的艺术',
+            en: 'Waiting is a state of mind where you need the future.',
+            zh: '等待是一种心智状态，你需要未来才能满足。',
+            analysis: '日常生活中我们常觉得"在等待中浪费时间"。托利颠覆这点：将等待转化为警觉的临在。在等车、排队时，不是"等"某事发生，而是全然临在此刻。这样没有一刻是被浪费的。',
+            category: 'practice'
+        },
+        {
+            id: 'insight13',
+            title: '疾病的内在层面',
+            en: 'Every illness has both a physical and an inner psychological component.',
+            zh: '每种疾病都有物质和内在心理两个层面。',
+            analysis: '医学聚焦物质身体。托利指出：很多疾病源于长期的内在抗拒和"痛苦之身"。通过停止抗拒、深入临在，可以从内在层面影响健康。这不否定医学，而是补充更深维度。',
+            category: 'understanding'
+        },
+        {
+            id: 'insight14',
+            title: '臣服不是失败',
+            en: 'Surrender is the simple but profound wisdom of yielding to rather than opposing the flow of life.',
+            zh: '臣服是顺应而非对抗生命之流的简单而深刻的智慧。',
+            analysis: '文化教导我们"永不放弃""坚持到底"。托利区分：对不可改变的外在情境臣服，对可改变的情境行动。臣服不是软弱，而是智慧地选择战场。抗拒不可改变的事只会制造痛苦。',
+            category: 'practice'
+        },
+        {
+            id: 'insight15',
+            title: '当下的创造力',
+            en: 'True intelligence operates silently. Stillness is where creativity and solutions are found.',
+            zh: '真正的智慧静静运作。寂静是创造力和解决方案的源泉。',
+            analysis: '我们认为更多思考=更好决策。托利揭示：强迫性思维阻碍智慧。当你停止思维噪音，安住当下，更深的智慧会自然涌现。最佳答案常在"不知道"的空间中出现。',
+            category: 'understanding'
+        },
+        {
+            id: 'insight16',
+            title: '平凡时刻的神圣性',
+            en: 'The Now is as it is because it cannot be otherwise.',
+            zh: '当下就是如此，因为它不可能是别的样子。',
+            analysis: '我们在日常琐事中等待"重要时刻"。托利指出：洗碗、走路、呼吸，每个当下都同等重要。神圣不在特殊体验，而在对平凡的全然临在。这颠覆了"意义"的整个概念。',
+            category: 'integration'
+        },
+        {
+            id: 'insight17',
+            title: '关系即修行',
+            en: 'If you are not in a state of acceptance, enjoyment or enthusiasm, look closely and you will find that you are creating suffering.',
+            zh: '如果你不处于接纳、享受或热情的状态，仔细观察就会发现你在创造痛苦。',
+            analysis: '关系中的冲突被视为对方的问题。托利指出：关系是照见小我的镜子。每次情绪反应都是练习临在的机会。对方不是障碍，而是你觉醒的助缘。',
+            category: 'integration'
+        },
+        {
+            id: 'insight18',
+            title: '喜悦的本质',
+            en: 'Joy does not come from what you do, it flows into what you do from deep within you.',
+            zh: '喜悦不来自你所做的事，而是从你内在深处流入你所做的事。',
+            analysis: '成就社会认为：做对的事→获得快乐。托利颠覆：先连接内在喜悦→做任何事都有喜悦。快乐依赖外在，喜悦源自本体。这解释了为什么成功后仍空虚。',
+            category: 'understanding'
+        },
+        {
+            id: 'insight19',
+            title: '负面性的无用',
+            en: 'Negativity is never the optimal way of dealing with any situation.',
+            zh: '负面性从来不是处理任何情况的最优方式。',
+            analysis: '我们相信负面情绪有用（愤怒给力量、担忧防问题）。托利断言：负面性只会蒙蔽清晰、消耗能量。真正有效的行动来自临在的清明，而非情绪的驱动。',
+            category: 'practice'
+        },
+        {
+            id: 'insight20',
+            title: '本体的永恒在场',
+            en: 'Being can be felt, but it can never be understood mentally.',
+            zh: '本体可以被感知，但永远无法被头脑理解。',
+            analysis: '理性文化要求"理解一切"。托利指出：最根本的真理（本体/意识本身）超越概念。你无法理解水是什么，但你可以喝水、游泳。同样，你无法概念化本体，但可以作为本体存在。',
+            category: 'foundation'
+        }
+    ]
+};
+// 核心概念数据
+const CONCEPTS_DATA = {
+    presence: {
+        id: 'presence',
+        name: { zh: '临在', en: 'Presence' },
+        importance: 5,
+        description: '超越思维的纯粹觉知',
+        dependencies: [],
+        
+        experienceHook: {
+            title: '先体验一下',
+            text: `在解释之前，先体验30秒。
+
+放松...
+感受你的右手
+不是想它，而是从内部感受它
+
+能感觉到微微的刺麻感吗？
+那个能感觉到的，就是临在`,
+            duration: 30
+        },
+        
+        contrast: {
+            wrong: '强行专注',
+            right: '自然觉知',
+            wrongExample: '咬紧牙关，告诉自己"我要专注！不能走神！"',
+            rightExample: '轻柔地感受呼吸，如果走神了，温柔地回来',
+            insight: '临在不是"用力"，而是"放松进入"'
+        },
+        
+        misconceptions: [
+            { myth: '临在是一种特殊的神秘体验', truth: '临在是你的自然状态' },
+            { myth: '我要"获得"临在', truth: '你要"停止遮蔽"临在' },
+            { myth: '临在时不能思考', truth: '临在时可以思考，但不被思维控制' }
+        ],
+        
+        personalizedContent: {
+            NT: `## 临在的逻辑框架
+
+前提1：你能观察思维
+前提2：观察者 ≠ 被观察对象
+推论1：你 ≠ 思维
+
+前提3：思维活在时间中（过去/未来）
+前提4：观察者只在当下
+推论2：真正的你只在当下
+
+结论：临在是你的本来面目`,
+            
+            NF: `## 临在：回家的感觉
+
+想象你在外面奔波了一整天...
+疲惫地推开家门
+那一刻：肩膀放下了，呼吸深了
+
+临在就是这种感觉
+不是去往某个地方
+而是回到你一直在的地方`,
+            
+            ST: `## 临在实用指南
+
+如何识别：
+✓ 呼吸自然变深
+✓ 肩膀放松
+✓ 思维放慢
+
+快速进入方法：
+1. 深呼吸3次（30秒）
+2. 感受脚踩在地上
+3. 听周围声音`,
+            
+            SP: `## 临在的感觉
+
+视觉：颜色更鲜艳，像第一次看见
+听觉：声音有立体感
+触觉：能感受到微微的能量感
+思维：念头变慢，像慢镜头`
+        }
+    },
+    
+    ego: {
+        id: 'ego',
+        name: { zh: '小我', en: 'Ego' },
+        importance: 5,
+        description: '虚假的自我认同',
+        dependencies: ['presence'],
+        
+        contrast: {
+            wrong: '小我是坏的我',
+            right: '小我是虚假的我',
+            wrongExample: '我的贪婪/嫉妒是小我（道德判断）',
+            rightExample: '认为"我就是我的情绪"是小我（认同错误）',
+            insight: '小我不是你的某个部分，而是一个认同错误'
+        },
+        
+        misconceptions: [
+            { myth: '小我是坏的，要消灭它', truth: '小我是幻觉，不能消灭不存在的东西' },
+            { myth: '小我是自私的那部分', truth: '小我是虚假的自我认同' },
+            { myth: '没有小我就没有个性', truth: '没有小我更真实' }
+        ],
+        
+        personalizedContent: {
+            NT: `## 小我的逻辑分析
+
+小我 = 与思维/情绪/经历的认同
+公式：小我说"我是X"（X是外在的）
+
+例子：
+× "我是失败者"（认同）
+✓ "我经历了失败"（观察）
+
+识别：当你感到被攻击时，是小我`,
+            
+            NF: `## 小我：一个伪装
+
+小我像是戴着的面具
+你以为面具就是你
+但当你摘下面具
+你还在，更真实
+
+小我需要戏剧性
+需要问题、冲突
+来证明自己存在`,
+            
+            ST: `## 识别小我的方法
+
+触发点：
+- 被批评/否定
+- 被忽视
+- 失败/挫折
+- 比较
+
+模式：
+- 受害者："为什么总是我"
+- 对抗："我要证明他们错了"
+- 优越："我比他们强"`,
+            
+            SP: `## 小我的感觉
+
+身体信号：
+- 胸口紧
+- 呼吸浅
+- 拳头紧握
+- 脸发热
+
+情绪信号：
+- 突然的愤怒
+- 强烈的防御
+- 想要反击`
+        }
+    },
+    
+    now: {
+        id: 'now',
+        name: { zh: '当下', en: 'The Now' },
+        importance: 5,
+        description: '唯一真实的时刻',
+        dependencies: [],
+        
+        contrast: {
+            wrong: '想着"现在"',
+            right: '在"现在"',
+            wrongExample: '我要活在当下！（这是思维）',
+            rightExample: '感受脚踩在地上...（直接体验）',
+            insight: '当下不是时间，是意识的质量'
+        },
+        
+        misconceptions: [
+            { myth: '当下就是此刻这个时间', truth: '当下是超越时间的维度' },
+            { myth: '活在当下就是及时行乐', truth: '活在当下是不被思维带走' },
+            { myth: '活在当下就是不计划未来', truth: '可以在当下计划，但不活在未来' }
+        ]
+    },
+    
+    watching_thinker: {
+        id: 'watching_thinker',
+        name: { zh: '观察思维', en: 'Watching the Thinker' },
+        importance: 4,
+        description: '观察念头而非认同',
+        dependencies: ['presence'],
+        
+        contrast: {
+            wrong: '分析思维内容',
+            right: '观察思维过程',
+            wrongExample: '想："为什么我会这么想？"',
+            rightExample: '看着："哦，又一个担心的念头"',
+            insight: '不是分析念头，是看着念头来去'
+        }
+    },
+    
+    awareness: {
+        id: 'awareness',
+        name: { zh: '觉知', en: 'Awareness' },
+        importance: 5,
+        description: '纯粹的意识',
+        dependencies: ['presence'],
+        
+        contrast: {
+            wrong: '思维的意识',
+            right: '纯粹的觉知',
+            wrongExample: '我在想什么',
+            rightExample: '觉知到思维在想',
+            insight: '觉知是容器，思维是内容'
+        }
+    }
+};
+
+// 游戏数据
+const GAMES_DATA = {
+    thinking_observer: {
+        id: 'thinking_observer',
+        name: '思维观察者',
+        concept: 'watching_thinker',
+        duration: 90,
+        description: '体验"观察"vs"认同"念头的差别',
+        
+        thoughts: {
+            ego: [
+                '我应该更努力',
+                '他为什么不回我消息',
+                '我不够好',
+                '这不公平',
+                '他们怎么看我',
+                '我又搞砸了',
+                '都是我的错',
+                '我永远做不到'
+            ],
+            neutral: [
+                '今天天气不错',
+                '该吃午饭了',
+                '窗外有只鸟'
+            ],
+            presence: [
+                '感受此刻的呼吸',
+                '回到当下',
+                '这只是一个念头'
+            ]
+        }
+    },
+    
+    present_moment: {
+        id: 'present_moment',
+        name: '当下之锚',
+        concept: 'now',
+        duration: 60,
+        description: '练习回到当下的能力',
+        
+        levels: [
+            { name: '初识当下', duration: 10 },
+            { name: '保持临在', duration: 30 },
+            { name: '深度临在', duration: 60 }
+        ]
+    }
+};
+
+// 练习数据
+const PRACTICES_DATA = {
+    three_breaths: {
+        id: 'three_breaths',
+        name: '3次呼吸',
+        type: 'micro',
+        duration: 30,
+        concept: 'presence',
+        
+        steps: [
+            { text: '第1次呼吸', duration: 8, focus: '感受空气进入鼻腔' },
+            { text: '第2次呼吸', duration: 8, focus: '感受胸腔扩张' },
+            { text: '第3次呼吸', duration: 8, focus: '感受整个身体' }
+        ],
+        
+        completion: '很好，你刚才临在了30秒'
+    },
+    
+    body_scan: {
+        id: 'body_scan',
+        name: '快速身体扫描',
+        type: 'micro',
+        duration: 60,
+        concept: 'presence',
+        
+        steps: [
+            { text: '感受头部', duration: 10, focus: '头皮、脸部有什么感觉？' },
+            { text: '感受肩膀', duration: 10, focus: '有紧张吗？试着放松' },
+            { text: '感受双手', duration: 15, focus: '从内部感受，有能量感吗？' },
+            { text: '感受双脚', duration: 15, focus: '脚底接触地面的感觉' },
+            { text: '感受整体', duration: 10, focus: '整个身体作为能量场' }
+        ]
+    },
+    
+    single_action: {
+        id: 'single_action',
+        name: '一次只做一件事',
+        type: 'daily',
+        concept: 'presence',
+        description: '选择一个日常活动，全然地做它',
+        
+        examples: [
+            { activity: '洗手', duration: 20, focus: ['水温', '水流', '手的感觉'] },
+            { activity: '走路', duration: 60, focus: ['脚步', '呼吸', '身体移动'] },
+            { activity: '吃饭', duration: 300, focus: ['味道', '质地', '咀嚼'] }
+        ]
+    }
+};
+// 用户画像管理
+class UserProfile {
+    constructor() {
+        this.load();
+    }
+    
+    // 生成新画像
+    static generate(mbti) {
+        const profile = {
+            mbti: mbti || 'adaptive',
+            style: this.deriveStyle(mbti),
+            created_at: new Date().toISOString(),
+            preferences: {
+                practiceLength: null,
+                practiceTime: null
+            }
+        };
+        
+        return profile;
+    }
+    
+    // 从MBTI推导风格
+    static deriveStyle(mbti) {
+        if (!mbti || mbti === 'adaptive') return 'balanced';
+        
+        const firstLetter = mbti[0];
+        const secondLetter = mbti[1];
+        
+        // NT - 理性型
+        if (secondLetter === 'N' && mbti.includes('T')) return 'NT';
+        // NF - 情感型
+        if (secondLetter === 'N' && mbti.includes('F')) return 'NF';
+        // ST - 实用型
+        if (secondLetter === 'S' && mbti.includes('T')) return 'ST';
+        // SP - 体验型
+        if (secondLetter === 'S' && mbti.includes('F')) return 'SP';
+        
+        return 'balanced';
+    }
+    
+    // 加载画像
+    load() {
+        const stored = localStorage.getItem('userProfile');
+        if (stored) {
+            this.data = JSON.parse(stored);
+        } else {
+            this.data = null;
+        }
+    }
+    
+    // 保存画像
+    save(profile) {
+        this.data = profile;
+        localStorage.setItem('userProfile', JSON.stringify(profile));
+    }
+    
+    // 获取当前画像
+    get() {
+        return this.data;
+    }
+    
+    // 检查是否已设置
+    exists() {
+        return this.data !== null;
+    }
+    
+    // 清除画像
+    clear() {
+        this.data = null;
+        localStorage.removeItem('userProfile');
+    }
+}
+
+// 用户进度管理
+class UserProgress {
+    constructor() {
+        this.load();
+    }
+    
+    // 加载进度
+    load() {
+        const stored = localStorage.getItem('userProgress');
+        if (stored) {
+            this.data = JSON.parse(stored);
+        } else {
+            this.data = this.createEmpty();
+        }
+    }
+    
+    // 创建空进度
+    createEmpty() {
+        return {
+            concepts: {},
+            games: {},
+            practices: {},
+            journey: [],
+            tree: {
+                level: 1,
+                water_count: 0,
+                fertilizer_count: 0,
+                branches_unlocked: []
+            }
+        };
+    }
+    
+    // 保存进度
+    save() {
+        localStorage.setItem('userProgress', JSON.stringify(this.data));
+    }
+    
+    // 获取概念进度
+    getConceptProgress(conceptId) {
+        return this.data.concepts[conceptId] || { level: 0, status: 'not_started' };
+    }
+    
+    // 更新概念进度
+    updateConceptProgress(conceptId, updates) {
+        if (!this.data.concepts[conceptId]) {
+            this.data.concepts[conceptId] = { level: 0, status: 'not_started', timeline: [] };
+        }
+        
+        Object.assign(this.data.concepts[conceptId], updates);
+        this.save();
+        
+        // 添加到旅程
+        this.addJourneyEvent({
+            type: 'concept_progress',
+            concept: conceptId,
+            ...updates
+        });
+    }
+    
+    // 记录游戏
+    recordGame(gameId, result) {
+        if (!this.data.games[gameId]) {
+            this.data.games[gameId] = { plays: 0, history: [] };
+        }
+        
+        this.data.games[gameId].plays++;
+        this.data.games[gameId].history.push({
+            timestamp: new Date().toISOString(),
+            ...result
+        });
+        
+        this.data.tree.water_count++;
+        this.save();
+        
+        // 添加到旅程
+        this.addJourneyEvent({
+            type: 'game_completed',
+            game: gameId,
+            result
+        });
+    }
+    
+    // 记录练习
+    recordPractice(practiceId, completed = true) {
+        if (!this.data.practices[practiceId]) {
+            this.data.practices[practiceId] = { count: 0, completions: 0 };
+        }
+        
+        this.data.practices[practiceId].count++;
+        if (completed) {
+            this.data.practices[practiceId].completions++;
+            this.data.tree.water_count++;
+        }
+        
+        this.data.practices[practiceId].last_done = new Date().toISOString();
+        this.save();
+        
+        // 添加到旅程
+        this.addJourneyEvent({
+            type: 'practice_completed',
+            practice: practiceId,
+            completed
+        });
+    }
+    
+    // 添加旅程事件
+    addJourneyEvent(event) {
+        this.data.journey.unshift({
+            timestamp: new Date().toISOString(),
+            ...event
+        });
+        
+        // 只保留最近50条
+        if (this.data.journey.length > 50) {
+            this.data.journey = this.data.journey.slice(0, 50);
+        }
+        
+        this.save();
+    }
+    
+    // 解锁概念分支
+    unlockBranch(conceptId) {
+        if (!this.data.tree.branches_unlocked.includes(conceptId)) {
+            this.data.tree.branches_unlocked.push(conceptId);
+            this.data.tree.fertilizer_count++;
+            this.save();
+        }
+    }
+    
+    // 计算树的等级
+    calculateTreeLevel() {
+        const totalPoints = this.data.tree.water_count + (this.data.tree.fertilizer_count * 3);
+        return Math.floor(totalPoints / 10) + 1;
+    }
+    
+    // 获取成长树数据
+    getTreeData() {
+        this.data.tree.level = this.calculateTreeLevel();
+        return this.data.tree;
+    }
+}
+// 概念解释引擎
+class ConceptExplainer {
+    constructor(userProfile, userProgress) {
+        this.profile = userProfile;
+        this.progress = userProgress;
+    }
+    
+    // 渲染概念列表
+    renderConceptsList(container) {
+        container.innerHTML = '';
+        
+        Object.values(CONCEPTS_DATA).forEach(concept => {
+            const progress = this.progress.getConceptProgress(concept.id);
+            const card = this.createConceptCard(concept, progress);
+            container.appendChild(card);
+        });
+    }
+    
+    // 创建概念卡片
+    createConceptCard(concept, progress) {
+        const card = document.createElement('div');
+        card.className = 'concept-card';
+        card.onclick = () => this.showConceptDetails(concept.id);
+        
+        // 等级点
+        const levelDots = Array.from({ length: 5 }, (_, i) => {
+            return `<span class="level-dot ${i < progress.level ? 'filled' : ''}"></span>`;
+        }).join('');
+        
+        card.innerHTML = `
+            <h3>${concept.name.zh}</h3>
+            <div class="en-name">${concept.name.en}</div>
+            <p class="description">${concept.description}</p>
+            <div class="concept-level">${levelDots}</div>
+        `;
+        
+        return card;
+    }
+    
+    // 显示概念详情
+    showConceptDetails(conceptId) {
+        const concept = CONCEPTS_DATA[conceptId];
+        if (!concept) return;
+        
+        const modal = document.getElementById('conceptModal');
+        const container = document.getElementById('conceptDetails');
+        
+        container.innerHTML = this.renderConceptContent(concept);
+        modal.classList.add('active');
+        
+        // 绑定事件
+        this.bindConceptEvents(concept);
+    }
+    
+    // 渲染概念内容
+    renderConceptContent(concept) {
+        const profile = this.profile.get();
+        const style = profile ? profile.style : 'balanced';
+        
+        // 获取个性化内容
+        const personalizedContent = this.getPersonalizedContent(concept, style);
+        
+        return `
+            <div class="concept-detail">
+                <h2>${concept.name.zh} <span class="en-name">${concept.name.en}</span></h2>
+                
+                ${concept.experienceHook ? `
+                    <div class="experience-section">
+                        <h3>✨ ${concept.experienceHook.title}</h3>
+                        <div class="experience-text">${this.formatText(concept.experienceHook.text)}</div>
+                        <button class="primary-btn" id="startExperienceBtn">
+                            开始体验 (${concept.experienceHook.duration}秒)
+                        </button>
+                    </div>
+                ` : ''}
+                
+                ${concept.contrast ? `
+                    <div class="contrast-section">
+                        <h3>🔄 关键对比</h3>
+                        <div class="contrast-grid">
+                            <div class="contrast-wrong">
+                                <h4>❌ 不是</h4>
+                                <p><strong>${concept.contrast.wrong}</strong></p>
+                                <p class="example">${concept.contrast.wrongExample}</p>
+                            </div>
+                            <div class="contrast-right">
+                                <h4>✓ 是</h4>
+                                <p><strong>${concept.contrast.right}</strong></p>
+                                <p class="example">${concept.contrast.rightExample}</p>
+                            </div>
+                        </div>
+                        <p class="insight">💡 ${concept.contrast.insight}</p>
+                    </div>
+                ` : ''}
+                
+                ${concept.misconceptions ? `
+                    <div class="misconceptions-section">
+                        <h3>🚫 常见误解</h3>
+                        ${concept.misconceptions.map(m => `
+                            <div class="misconception-item">
+                                <p class="myth">❌ 误解：${m.myth}</p>
+                                <p class="truth">✓ 真相：${m.truth}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                ` : ''}
+                
+                <div class="personalized-section">
+                    <h3>📚 个性化解释</h3>
+                    <div class="personalized-content">${this.formatText(personalizedContent)}</div>
+                </div>
+                
+                <div class="actions-section">
+                    <h3>🎯 下一步</h3>
+                    <div class="action-buttons">
+                        <button class="card-btn" data-action="practice" data-practice="three_breaths">
+                            做个练习
+                        </button>
+                        <button class="card-btn" data-action="game" data-game="thinking_observer">
+                            玩个游戏
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+    
+    // 获取个性化内容
+    getPersonalizedContent(concept, style) {
+        if (concept.personalizedContent) {
+            return concept.personalizedContent[style] || concept.personalizedContent.NT || concept.description;
+        }
+        return concept.description;
+    }
+    
+    // 格式化文本（保留换行）
+    formatText(text) {
+        return text.split('\n').map(line => line.trim()).filter(line => line).join('<br>');
+    }
+    
+    // 绑定概念事件
+    bindConceptEvents(concept) {
+        // 体验按钮
+        const expBtn = document.getElementById('startExperienceBtn');
+        if (expBtn) {
+            expBtn.onclick = () => this.startExperience(concept);
+        }
+        
+        // 操作按钮
+        document.querySelectorAll('[data-action]').forEach(btn => {
+            btn.onclick = () => {
+                const action = btn.dataset.action;
+                if (action === 'practice') {
+                    const practiceId = btn.dataset.practice;
+                    this.closeModal();
+                    window.app.showPractice(practiceId);
+                } else if (action === 'game') {
+                    const gameId = btn.dataset.game;
+                    this.closeModal();
+                    window.app.showGame(gameId);
+                }
+            };
+        });
+    }
+    
+    // 开始体验
+    startExperience(concept) {
+        const hook = concept.experienceHook;
+        if (!hook) return;
+        
+        const container = document.getElementById('conceptDetails');
+        container.innerHTML = `
+            <div class="experience-guide">
+                <h2>体验引导</h2>
+                <div class="guide-text">${this.formatText(hook.text)}</div>
+                <div class="timer-display">
+                    <div class="timer-circle">
+                        <span id="timerText">${hook.duration}</span>
+                    </div>
+                </div>
+                <button class="primary-btn" id="completeExpBtn" style="display: none;">
+                    体验完成
+                </button>
+            </div>
+        `;
+        
+        // 开始倒计时
+        this.startTimer(hook.duration, () => {
+            document.getElementById('completeExpBtn').style.display = 'block';
+            
+            // 更新进度
+            this.progress.updateConceptProgress(concept.id, {
+                level: Math.max(1, this.progress.getConceptProgress(concept.id).level),
+                status: 'learning'
+            });
+            
+            document.getElementById('completeExpBtn').onclick = () => {
+                this.showConceptDetails(concept.id);
+            };
+        });
+    }
+    
+    // 计时器
+    startTimer(seconds, onComplete) {
+        const timerText = document.getElementById('timerText');
+        let remaining = seconds;
+        
+        const interval = setInterval(() => {
+            remaining--;
+            if (timerText) timerText.textContent = remaining;
+            
+            if (remaining <= 0) {
+                clearInterval(interval);
+                if (onComplete) onComplete();
+            }
+        }, 1000);
+    }
+    
+    // 关闭模态框
+    closeModal() {
+        document.getElementById('conceptModal').classList.remove('active');
+    }
+}
+// 游戏引擎
+class GameEngine {
+    constructor(userProgress) {
+        this.progress = userProgress;
+    }
+    
+    // 渲染游戏列表
+    renderGamesList(container) {
+        container.innerHTML = '';
+        
+        Object.values(GAMES_DATA).forEach(game => {
+            const card = this.createGameCard(game);
+            container.appendChild(card);
+        });
+    }
+    
+    // 创建游戏卡片
+    createGameCard(game) {
+        const card = document.createElement('div');
+        card.className = 'game-card';
+        card.onclick = () => this.startGame(game.id);
+        
+        card.innerHTML = `
+            <h3>${game.name}</h3>
+            <div class="duration-badge">${game.duration}秒</div>
+            <p>${game.description}</p>
+        `;
+        
+        return card;
+    }
+    
+    // 开始游戏
+    startGame(gameId) {
+        const game = GAMES_DATA[gameId];
+        if (!game) return;
+        
+        const modal = document.getElementById('gameModal');
+        const container = document.getElementById('gameContent');
+        
+        modal.classList.add('active');
+        
+        // 根据游戏类型渲染
+        if (gameId === 'thinking_observer') {
+            this.startThinkingObserver(container, game);
+        } else if (gameId === 'present_moment') {
+            this.startPresentMoment(container, game);
+        }
+    }
+    
+    // 思维观察者游戏
+    startThinkingObserver(container, game) {
+        container.innerHTML = `
+            <div class="game-screen">
+                <h2>${game.name}</h2>
+                <p class="game-intro">
+                    你即将看到各种"念头"冒出来。<br><br>
+                    👆 <strong>点击</strong> = 认同这个念头<br>
+                    👀 <strong>不点</strong> = 观察这个念头<br><br>
+                    体验两种模式的差别
+                </p>
+                
+                <div class="game-stats">
+                    <div class="stat">观察：<span id="observedCount">0</span></div>
+                    <div class="stat">认同：<span id="identifiedCount">0</span></div>
+                    <div class="timer">⏱️ <span id="gameTimer">${game.duration}</span>秒</div>
+                </div>
+                
+                <div class="game-area" id="thoughtsArea"></div>
+                
+                <button class="primary-btn" id="startGameBtn">开始游戏</button>
+                <div id="gameResult" style="display: none;"></div>
+            </div>
+        `;
+        
+        document.getElementById('startGameBtn').onclick = () => {
+            this.runThinkingObserverGame(game);
+        };
+    }
+    
+    // 运行思维观察者游戏
+    runThinkingObserverGame(game) {
+        document.getElementById('startGameBtn').style.display = 'none';
+        
+        const area = document.getElementById('thoughtsArea');
+        const stats = {
+            observed: 0,
+            identified: 0,
+            mode: 'normal',
+            consecutiveObserves: 0,
+            consecutiveClicks: 0
+        };
+        
+        let timeLeft = game.duration;
+        const timerEl = document.getElementById('gameTimer');
+        
+        // 倒计时
+        const timerInterval = setInterval(() => {
+            timeLeft--;
+            timerEl.textContent = timeLeft;
+            
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                clearInterval(thoughtInterval);
+                this.showGameResult(stats, game);
+            }
+        }, 1000);
+        
+        // 生成念头
+        const thoughtInterval = setInterval(() => {
+            this.spawnThought(area, stats, game);
+        }, 3000);
+        
+        // 立即生成第一个
+        this.spawnThought(area, stats, game);
+    }
+    
+    // 生成念头气泡
+    spawnThought(area, stats, game) {
+        const allThoughts = [
+            ...game.thoughts.ego,
+            ...game.thoughts.neutral,
+            ...game.thoughts.presence
+        ];
+        
+        const thoughtText = allThoughts[Math.floor(Math.random() * allThoughts.length)];
+        
+        const bubble = document.createElement('div');
+        bubble.className = 'thought-bubble';
+        bubble.textContent = thoughtText;
+        bubble.style.left = Math.random() * 80 + '%';
+        bubble.style.top = Math.random() * 60 + '%';
+        
+        let clicked = false;
+        
+        bubble.onclick = () => {
+            if (clicked) return;
+            clicked = true;
+            
+            // 认同
+            stats.identified++;
+            stats.consecutiveClicks++;
+            stats.consecutiveObserves = 0;
+            
+            document.getElementById('identifiedCount').textContent = stats.identified;
+            
+            bubble.classList.add('identified');
+            
+            // 检查模式
+            if (stats.consecutiveClicks >= 5 && stats.mode !== 'ego') {
+                stats.mode = 'ego';
+                document.body.classList.add('ego-mode');
+            }
+            
+            setTimeout(() => bubble.remove(), 500);
+        };
+        
+        area.appendChild(bubble);
+        
+        // 5秒后自动消失（观察）
+        setTimeout(() => {
+            if (!clicked) {
+                stats.observed++;
+                stats.consecutiveObserves++;
+                stats.consecutiveClicks = 0;
+                
+                document.getElementById('observedCount').textContent = stats.observed;
+                
+                bubble.classList.add('observed');
+                
+                // 检查模式
+                if (stats.consecutiveObserves >= 5 && stats.mode !== 'presence') {
+                    stats.mode = 'presence';
+                    document.body.classList.remove('ego-mode');
+                    document.body.classList.add('presence-mode');
+                }
+                
+                setTimeout(() => bubble.remove(), 500);
+            }
+        }, 5000);
+    }
+    
+    // 显示游戏结果
+    showGameResult(stats, game) {
+        document.getElementById('thoughtsArea').style.display = 'none';
+        const resultEl = document.getElementById('gameResult');
+        resultEl.style.display = 'block';
+        
+        const total = stats.observed + stats.identified;
+        const observeRate = total > 0 ? Math.round((stats.observed / total) * 100) : 0;
+        
+        let insight = '';
+        if (stats.identified > stats.observed) {
+            insight = '你更倾向于认同念头。这很正常，多数人都这样。关键是开始觉察。';
+        } else if (stats.observed > stats.identified * 2) {
+            insight = '很好！你体验到了观察的力量。那种清明的感觉，记住它。';
+        } else {
+            insight = '你在观察和认同之间取得了平衡。继续练习，会越来越熟练。';
+        }
+        
+        resultEl.innerHTML = `
+            <h3>游戏结果</h3>
+            <div class="result-stats">
+                <div class="result-item">
+                    <span class="result-label">观察</span>
+                    <span class="result-value">${stats.observed}</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">认同</span>
+                    <span class="result-value">${stats.identified}</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">观察率</span>
+                    <span class="result-value">${observeRate}%</span>
+                </div>
+            </div>
+            
+            <div class="result-insight">
+                <p>${insight}</p>
+            </div>
+            
+            <div class="result-actions">
+                <button class="primary-btn" onclick="location.reload()">再玩一次</button>
+                <button class="card-btn" onclick="document.getElementById('gameModal').classList.remove('active')">
+                    返回
+                </button>
+            </div>
+        `;
+        
+        // 记录游戏
+        this.progress.recordGame(game.id, {
+            observed: stats.observed,
+            identified: stats.identified,
+            mode: stats.mode
+        });
+        
+        // 清理模式
+        document.body.classList.remove('ego-mode', 'presence-mode');
+    }
+    
+    // 当下之锚游戏
+    startPresentMoment(container, game) {
+        container.innerHTML = `
+            <div class="game-screen">
+                <h2>${game.name}</h2>
+                <p class="game-intro">
+                    中央的圆圈代表"当下"。<br>
+                    周围的干扰代表"思维的拉扯"。<br><br>
+                    持续关注中央的圆圈<br>
+                    当注意力被拉走时，轻触屏幕回来
+                </p>
+                
+                <div class="level-selector">
+                    ${game.levels.map((level, i) => `
+                        <button class="level-btn" data-level="${i}">
+                            ${level.name} (${level.duration}秒)
+                        </button>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+        
+        document.querySelectorAll('.level-btn').forEach(btn => {
+            btn.onclick = () => {
+                const levelIndex = parseInt(btn.dataset.level);
+                this.runPresentMomentGame(game, levelIndex);
+            };
+        });
+    }
+    
+    // 运行当下之锚游戏
+    runPresentMomentGame(game, levelIndex) {
+        const level = game.levels[levelIndex];
+        const container = document.getElementById('gameContent');
+        
+        container.innerHTML = `
+            <div class="present-moment-game">
+                <h3>${level.name}</h3>
+                <div class="breathing-circle-container">
+                    <div class="breathing-circle"></div>
+                </div>
+                <div class="distraction-area" id="distractionArea"></div>
+                <div class="game-timer">⏱️ <span id="pmTimer">${level.duration}</span>秒</div>
+                <p class="hint">专注于呼吸圆圈...</p>
+            </div>
+        `;
+        
+        let distractedCount = 0;
+        let timeLeft = level.duration;
+        
+        // 倒计时
+        const timerInterval = setInterval(() => {
+            timeLeft--;
+            document.getElementById('pmTimer').textContent = timeLeft;
+            
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                clearInterval(distractionInterval);
+                this.showPresentMomentResult(distractedCount, level);
+            }
+        }, 1000);
+        
+        // 生成干扰
+        const distractionInterval = setInterval(() => {
+            this.spawnDistraction(distractedCount);
+        }, 5000);
+        
+        // 点击回到当下
+        document.querySelector('.breathing-circle-container').onclick = () => {
+            document.body.classList.remove('distracted');
+        };
+    }
+    
+    // 生成干扰
+    spawnDistraction(count) {
+        const distractions = [
+            '晚饭吃什么？',
+            '明天要做...',
+            '你还记得...',
+            '如果...'
+        ];
+        
+        const area = document.getElementById('distractionArea');
+        const text = distractions[Math.floor(Math.random() * distractions.length)];
+        
+        const distraction = document.createElement('div');
+        distraction.className = 'distraction-text';
+        distraction.textContent = text;
+        distraction.style.left = Math.random() * 80 + '%';
+        distraction.style.top = Math.random() * 20 + '%';
+        
+        area.appendChild(distraction);
+        
+        document.body.classList.add('distracted');
+        
+        setTimeout(() => distraction.remove(), 3000);
+    }
+    
+    // 显示当下之锚结果
+    showPresentMomentResult(distractedCount, level) {
+        const container = document.getElementById('gameContent');
+        
+        let message = '';
+        if (distractedCount < 3) {
+            message = '太棒了！你保持了很好的临在。';
+        } else if (distractedCount < 6) {
+            message = '不错！分心是正常的，关键是能回来。';
+        } else {
+            message = '继续练习，你会越来越熟练。';
+        }
+        
+        container.innerHTML = `
+            <div class="game-result">
+                <h3>完成 ${level.name}!</h3>
+                <p>${message}</p>
+                <div class="result-actions">
+                    <button class="primary-btn" onclick="location.reload()">继续挑战</button>
+                    <button class="card-btn" onclick="document.getElementById('gameModal').classList.remove('active')">
+                        返回
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        this.progress.recordGame('present_moment', {
+            level: level.name,
+            distracted: distractedCount
+        });
+    }
+}
+// 练习管理器
+class PracticeManager {
+    constructor(userProgress) {
+        this.progress = userProgress;
+    }
+    
+    // 渲染练习列表
+    renderPracticesList(container) {
+        container.innerHTML = '';
+        
+        Object.values(PRACTICES_DATA).forEach(practice => {
+            const card = this.createPracticeCard(practice);
+            container.appendChild(card);
+        });
+    }
+    
+    // 创建练习卡片
+    createPracticeCard(practice) {
+        const card = document.createElement('div');
+        card.className = 'practice-card';
+        card.onclick = () => this.startPractice(practice.id);
+        
+        card.innerHTML = `
+            <h3>${practice.name}</h3>
+            <div class="duration-badge">${practice.duration}秒</div>
+            <p>${practice.description || this.getStepsPreview(practice)}</p>
+        `;
+        
+        return card;
+    }
+    
+    // 获取步骤预览
+    getStepsPreview(practice) {
+        if (practice.steps && practice.steps.length > 0) {
+            return practice.steps.map(s => s.text).join(' → ');
+        }
+        return '点击开始练习';
+    }
+    
+    // 开始练习
+    startPractice(practiceId) {
+        const practice = PRACTICES_DATA[practiceId];
+        if (!practice) return;
+        
+        const modal = document.getElementById('practiceModal');
+        const container = document.getElementById('practiceContent');
+        
+        modal.classList.add('active');
+        
+        if (practice.steps) {
+            this.runGuidedPractice(container, practice);
+        } else {
+            this.showPracticeInfo(container, practice);
+        }
+    }
+    
+    // 运行引导式练习
+    runGuidedPractice(container, practice) {
+        container.innerHTML = `
+            <div class="practice-screen">
+                <h2>${practice.name}</h2>
+                <p class="practice-duration">总时长：${practice.duration}秒</p>
+                
+                <div class="practice-guide" id="practiceGuide">
+                    <p class="guide-intro">准备好了吗？放松，跟随引导...</p>
+                </div>
+                
+                <div class="practice-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="practiceProgress"></div>
+                    </div>
+                    <div class="step-indicator">
+                        <span id="currentStep">0</span> / ${practice.steps.length}
+                    </div>
+                </div>
+                
+                <button class="primary-btn" id="startPracticeBtn">开始练习</button>
+                <div id="practiceComplete" style="display: none;"></div>
+            </div>
+        `;
+        
+        document.getElementById('startPracticeBtn').onclick = () => {
+            this.guidePractice(practice);
+        };
+    }
+    
+    // 引导练习流程
+    guidePractice(practice) {
+        document.getElementById('startPracticeBtn').style.display = 'none';
+        
+        const guide = document.getElementById('practiceGuide');
+        const progressBar = document.getElementById('practiceProgress');
+        const stepIndicator = document.getElementById('currentStep');
+        
+        let currentStep = 0;
+        
+        const runStep = () => {
+            if (currentStep >= practice.steps.length) {
+                this.completePractice(practice);
+                return;
+            }
+            
+            const step = practice.steps[currentStep];
+            
+            guide.innerHTML = `
+                <h3>${step.text}</h3>
+                <p class="focus-text">${step.focus}</p>
+                <div class="step-timer">
+                    <div class="timer-circle">
+                        <span id="stepTimer">${step.duration}</span>
+                    </div>
+                </div>
+            `;
+            
+            stepIndicator.textContent = currentStep + 1;
+            
+            // 更新进度条
+            const progress = ((currentStep + 1) / practice.steps.length) * 100;
+            progressBar.style.width = progress + '%';
+            
+            // 倒计时
+            let timeLeft = step.duration;
+            const timerEl = document.getElementById('stepTimer');
+            
+            const interval = setInterval(() => {
+                timeLeft--;
+                if (timerEl) timerEl.textContent = timeLeft;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(interval);
+                    currentStep++;
+                    setTimeout(runStep, 500);
+                }
+            }, 1000);
+        };
+        
+        runStep();
+    }
+    
+    // 完成练习
+    completePractice(practice) {
+        const guide = document.getElementById('practiceGuide');
+        const completeEl = document.getElementById('practiceComplete');
+        
+        guide.style.display = 'none';
+        completeEl.style.display = 'block';
+        
+        completeEl.innerHTML = `
+            <div class="practice-completion">
+                <div class="completion-icon">✨</div>
+                <h3>练习完成！</h3>
+                <p>${practice.completion || '很好，你刚才保持了临在'}</p>
+                
+                <div class="completion-actions">
+                    <button class="primary-btn" onclick="location.reload()">再做一次</button>
+                    <button class="card-btn" onclick="document.getElementById('practiceModal').classList.remove('active')">
+                        完成
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        // 记录练习
+        this.progress.recordPractice(practice.id, true);
+    }
+    
+    // 显示练习信息（非引导式）
+    showPracticeInfo(container, practice) {
+        container.innerHTML = `
+            <div class="practice-screen">
+                <h2>${practice.name}</h2>
+                <p class="practice-description">${practice.description}</p>
+                
+                ${practice.examples ? `
+                    <div class="practice-examples">
+                        <h3>示例活动：</h3>
+                        ${practice.examples.map(ex => `
+                            <div class="example-item">
+                                <h4>${ex.activity}</h4>
+                                <p>专注于：${ex.focus.join('、')}</p>
+                                <p class="example-duration">约${ex.duration}秒</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                ` : ''}
+                
+                <div class="practice-actions">
+                    <button class="primary-btn" onclick="document.getElementById('practiceModal').classList.remove('active')">
+                        我明白了
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+}
+// 主应用 - 包含书籍洞见
+class PowerOfNowApp {
+    constructor() {
+        this.userProfile = new UserProfile();
+        this.userProgress = new UserProgress();
+        this.conceptExplainer = null;
+        this.gameEngine = null;
+        this.practiceManager = null;
+        
+        this.init();
+    }
+    
+    init() {
+        if (this.userProfile.exists()) {
+            this.showHome();
+        } else {
+            this.showWelcome();
+        }
+        
+        this.conceptExplainer = new ConceptExplainer(this.userProfile, this.userProgress);
+        this.gameEngine = new GameEngine(this.userProgress);
+        this.practiceManager = new PracticeManager(this.userProgress);
+        
+        this.bindEvents();
+        this.renderBookInsights();
+    }
+    
+    bindEvents() {
+        const startBtn = document.getElementById('startBtn');
+        if (startBtn) {
+            startBtn.onclick = () => this.handleStart();
+        }
+        
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.onclick = () => {
+                const view = link.dataset.view;
+                this.switchView(view);
+            };
+        });
+        
+        document.querySelectorAll('.modal-close').forEach(btn => {
+            btn.onclick = () => {
+                btn.closest('.modal').classList.remove('active');
+            };
+        });
+        
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.onclick = (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                }
+            };
+        });
+        
+        document.querySelectorAll('.start-learning-btn').forEach(btn => {
+            btn.onclick = () => {
+                const card = btn.closest('.concept-card-new');
+                if (card && !btn.disabled) {
+                    const conceptId = card.dataset.concept;
+                    this.conceptExplainer.showConceptDetails(conceptId);
+                }
+            };
+        });
+        
+        document.querySelectorAll('[data-practice]').forEach(btn => {
+            btn.onclick = () => {
+                const practiceId = btn.dataset.practice;
+                this.showPractice(practiceId);
+            };
+        });
+        
+        document.querySelectorAll('[data-game]').forEach(btn => {
+            btn.onclick = () => {
+                const gameId = btn.dataset.game;
+                this.showGame(gameId);
+            };
+        });
+        
+        // 书籍洞见导航
+        document.querySelectorAll('.insight-nav-btn').forEach(btn => {
+            btn.onclick = () => {
+                const section = btn.dataset.section;
+                this.switchInsightSection(section);
+            };
+        });
+    }
+    
+    handleStart() {
+        const mbtiSelect = document.getElementById('mbtiSelect');
+        const mbti = mbtiSelect ? mbtiSelect.value : '';
+        
+        const profile = UserProfile.generate(mbti);
+        this.userProfile.save(profile);
+        
+        this.showHome();
+    }
+    
+    showWelcome() {
+        const welcomeScreen = document.getElementById('welcomeScreen');
+        const homeScreen = document.getElementById('homeScreen');
+        
+        if (welcomeScreen) welcomeScreen.classList.add('active');
+        if (homeScreen) homeScreen.classList.remove('active');
+    }
+    
+    showHome() {
+        const welcomeScreen = document.getElementById('welcomeScreen');
+        const homeScreen = document.getElementById('homeScreen');
+        
+        if (welcomeScreen) welcomeScreen.classList.remove('active');
+        if (homeScreen) homeScreen.classList.add('active');
+        
+        this.updateHomePage();
+        this.switchView('book'); // 默认显示理解全书
+    }
+    
+    updateHomePage() {
+        this.updateConceptCards();
+    }
+    
+    updateConceptCards() {
+        const concepts = ['presence', 'watching_thinker', 'ego', 'now', 'awareness'];
+        
+        concepts.forEach((conceptId, index) => {
+            const card = document.querySelector(`.concept-card-new[data-concept="${conceptId}"]`);
+            if (!card) return;
+            
+            const progress = this.userProgress.getConceptProgress(conceptId);
+            const statusBadge = card.querySelector('.status-badge');
+            const startBtn = card.querySelector('.start-learning-btn');
+            
+            // 移除锁定状态，所有概念都可以自由学习
+            card.classList.remove('locked');
+            
+            if (progress.level >= 3) {
+                card.classList.add('completed');
+                if (statusBadge) {
+                    statusBadge.textContent = '✅ 已完成';
+                    statusBadge.className = 'status-badge completed';
+                }
+                if (startBtn) {
+                    startBtn.textContent = '复习';
+                    startBtn.disabled = false;
+                }
+            } else if (progress.level > 0) {
+                if (statusBadge) {
+                    statusBadge.textContent = '学习中';
+                    statusBadge.className = 'status-badge learning';
+                }
+                if (startBtn) {
+                    startBtn.textContent = '继续学习';
+                    startBtn.disabled = false;
+                }
+            } else {
+                if (statusBadge) {
+                    statusBadge.textContent = '未开始';
+                    statusBadge.className = 'status-badge not-started';
+                }
+                if (startBtn) {
+                    startBtn.textContent = '开始学习';
+                    startBtn.disabled = false;
+                }
+            }
+        });
+    }
+    
+    switchView(viewName) {
+        document.querySelectorAll('.view').forEach(view => {
+            view.classList.remove('active');
+        });
+        
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.classList.remove('active');
+            if (link.dataset.view === viewName) {
+                link.classList.add('active');
+            }
+        });
+        
+        const targetView = document.getElementById(viewName + 'View');
+        if (targetView) {
+            targetView.classList.add('active');
+        }
+        
+        this.loadViewContent(viewName);
+    }
+    
+    loadViewContent(viewName) {
+        switch (viewName) {
+            case 'book':
+                // 书籍洞见已经在renderBookInsights中渲染
+                break;
+            case 'learn':
+                this.updateConceptCards();
+                break;
+            case 'tools':
+                const gamesList = document.getElementById('gamesList');
+                if (gamesList && gamesList.children.length === 0) {
+                    this.gameEngine.renderGamesList(gamesList);
+                }
+                
+                const practicesList = document.getElementById('practicesList');
+                if (practicesList && practicesList.children.length === 0) {
+                    this.practiceManager.renderPracticesList(practicesList);
+                }
+                break;
+        }
+    }
+    
+    showGame(gameId) {
+        this.gameEngine.startGame(gameId);
+    }
+    
+    showPractice(practiceId) {
+        this.practiceManager.startPractice(practiceId);
+    }
+    
+    // 书籍洞见相关方法
+    switchInsightSection(sectionName) {
+        document.querySelectorAll('.insight-nav-btn').forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.dataset.section === sectionName) {
+                btn.classList.add('active');
+            }
+        });
+        
+        document.querySelectorAll('.insight-section').forEach(section => {
+            section.classList.remove('active');
+        });
+        
+        const targetSection = document.getElementById(sectionName + 'Section');
+        if (targetSection) {
+            targetSection.classList.add('active');
+        }
+    }
+    
+    renderBookInsights() {
+        this.renderChapters();
+        this.renderUltimateProposition();
+        this.renderArgumentMap();
+        this.renderKey20();
+    }
+    
+    renderChapters() {
+        const container = document.getElementById('chaptersGrid');
+        if (!container) return;
+        
+        container.innerHTML = BOOK_INSIGHTS.chapters.map(chapter => `
+            <div class="chapter-card">
+                <div class="chapter-number">${chapter.number}</div>
+                <h3>${chapter.title}</h3>
+                <div class="chapter-proposition">${chapter.coreProposition}</div>
+                <div class="chapter-meta">
+                    <div class="chapter-meta-item">
+                        <strong>回答的问题：</strong>${chapter.question}
+                    </div>
+                    <div class="chapter-meta-item">
+                        <strong>颠覆观点：</strong>${chapter.subversion}
+                    </div>
+                    <div class="chapter-meta-item">
+                        <strong>核心价值：</strong>${chapter.value}
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+    
+    renderUltimateProposition() {
+        const container = document.getElementById('ultimateContent');
+        if (!container) return;
+        
+        const ultimate = BOOK_INSIGHTS.ultimateProposition;
+        
+        container.innerHTML = `
+            <div class="ultimate-statement">${ultimate.statement}</div>
+            <h3 style="color: var(--color-bamboo); margin-bottom: var(--spacing-md);">这个命题的展开：</h3>
+            <div class="expansion-list">
+                ${ultimate.expansion.map(item => `
+                    <div class="expansion-item">${item}</div>
+                `).join('')}
+            </div>
+        `;
+    }
+    
+    renderArgumentMap() {
+        const startPointEl = document.getElementById('startPoint');
+        if (startPointEl) {
+            startPointEl.textContent = BOOK_INSIGHTS.argumentMap.startPoint;
+        }
+        
+        const landmarksPath = document.getElementById('landmarksPath');
+        if (!landmarksPath) return;
+        
+        landmarksPath.innerHTML = BOOK_INSIGHTS.argumentMap.landmarks.map(landmark => {
+            let content = `
+                <div class="landmark-card">
+                    <h3 class="landmark-title">${landmark.title}</h3>
+                    <div class="landmark-argument">${landmark.argument}</div>
+            `;
+            
+            if (landmark.keyPoints) {
+                content += `
+                    <h4>核心论证</h4>
+                    <ul class="key-points">
+                        ${landmark.keyPoints.map(point => `<li>${point}</li>`).join('')}
+                    </ul>
+                `;
+            }
+            
+            if (landmark.insight) {
+                content += `<div class="insight-box">💡 ${landmark.insight}</div>`;
+            }
+            
+            if (landmark.experiment) {
+                content += `<div class="insight-box">🧪 思想实验：${landmark.experiment}</div>`;
+            }
+            
+            if (landmark.practices) {
+                content += `
+                    <h4>实践路径</h4>
+                    <ul class="key-points">
+                        ${landmark.practices.map(practice => `<li>${practice}</li>`).join('')}
+                    </ul>
+                `;
+            }
+            
+            if (landmark.examples) {
+                content += `
+                    <h4>具体示例</h4>
+                    <ul class="key-points">
+                        ${landmark.examples.map(example => `<li>${example}</li>`).join('')}
+                    </ul>
+                `;
+            }
+            
+            if (landmark.nextStep) {
+                content += `<div class="next-step">→ ${landmark.nextStep}</div>`;
+            }
+            
+            content += `</div>`;
+            return content;
+        }).join('');
+    }
+    
+    renderKey20() {
+        const container = document.getElementById('key20Grid');
+        if (!container) return;
+        
+        container.innerHTML = BOOK_INSIGHTS.key20.map((insight, index) => `
+            <div class="insight-card">
+                <div class="insight-number">${index + 1}</div>
+                <h3>${insight.title}</h3>
+                <div class="insight-quote">
+                    <div class="insight-en">${insight.en}</div>
+                    <div class="insight-zh">${insight.zh}</div>
+                </div>
+                <div class="insight-analysis">${insight.analysis}</div>
+                <div class="category-badge">${this.getCategoryLabel(insight.category)}</div>
+            </div>
+        `).join('');
+    }
+    
+    getCategoryLabel(category) {
+        const labels = {
+            'foundation': '基础洞见',
+            'practice': '实践智慧',
+            'understanding': '深度理解',
+            'integration': '生活整合'
+        };
+        return labels[category] || category;
+    }
+}
+
+// 初始化应用
+window.addEventListener('DOMContentLoaded', () => {
+    const app = new PowerOfNowApp();
+});
+    </script>
+</body>
+</html>
